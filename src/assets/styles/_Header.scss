@@ -1,0 +1,24 @@
+@import './Mixin';
+@import './Typography';
+@import './Variables';
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $bg-color1;
+    color: $text-color2;
+    padding: 0em 4em;
+}
+
+.header__logo-part, .header__login-part  {
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+
+}
+
+.header__title {
+    @include main-title;
+}

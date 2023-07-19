@@ -1,4 +1,5 @@
 import Flashcard from "./Flashcard";
+import '../assets/styles/Style.scss';
 
 function Learning() {
   return (

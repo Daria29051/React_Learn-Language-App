@@ -1,0 +1,24 @@
+@import './Mixin';
+@import './Typography';
+@import './Variables';
+
+
+.home {
+    display: flex;
+    flex-direction: row;
+}
+.home__text {
+    background-color:  $bg-color3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    
+
+}
+
+.home__paragraph {
+    line-height: 1.5em;
+    padding: 1.5em;
+}
+

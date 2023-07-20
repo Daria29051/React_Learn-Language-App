@@ -1,0 +1,23 @@
+
+.wordlist {
+    padding: 1.5em 0em;
+    border-top: 1px solid $text-color3;
+
+}
+.wordlist__table{
+    margin: auto;
+    border-collapse: collapse;
+    border: 2px solid $text-color3;
+    width: 60%;
+
+    th, td {
+        border: 1px solid $text-color3;
+        text-align: center;
+        padding: 5px;
+     }
+
+     th {
+        color:$text-color3;
+     }
+}
+

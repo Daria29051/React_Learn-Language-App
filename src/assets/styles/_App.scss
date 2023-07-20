@@ -4,17 +4,12 @@
 }
 
 
-.button {
-  background-color: $bg-color1;
-  color: $text-color2;
-  border: none;
-  width:340px;
-  height: 60px;
-  border-radius: 16px;
-}
 
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .App-logo {

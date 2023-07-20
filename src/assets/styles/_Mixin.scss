@@ -5,4 +5,24 @@ font-weight: 100;
 };
 
 
+@mixin button {
+    background-color: $bg-color1;
+    color: $text-color2;
+    border: none;
+    width: 340px;
+    height: 60px;
+    border-radius: 16px;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    cursor: pointer;
 
+    &:hover {
+        border: 1px solid orangered;
+        background-color: orange;
+    }
+
+    &:active {
+        border: 1px solid orangered;
+        background-color: orange;
+    }
+  }

@@ -20,5 +20,10 @@
 .home__paragraph {
     line-height: 1.5em;
     padding: 1.5em;
+    font-size: $text-font-size;
+}
+
+.button {
+    @include button;
 }
 

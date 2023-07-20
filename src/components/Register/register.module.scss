@@ -1,3 +1,17 @@
+@import '../../assets/styles/mixin.scss';
+@import '../../assets/styles/variables.scss';
+
 .register {
-    color: black;
+    color: $text-color1;
+    cursor: pointer;
+    font-size: 1.2em;
+
+    &:hover {
+        color: $text-color5; 
+    }
+
+    
+    &:active {
+        color: $text-color5; 
+    }
 }

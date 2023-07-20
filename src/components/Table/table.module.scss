@@ -9,6 +9,32 @@
 
 .wordlist__title {
   text-align: center;
+  @include main-title;
+}
+
+.wordlist__optionButtonsContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5em;
+}
+
+.wordlist__optionButton {
+    background-color: $bg-color3;
+    color: $text-color3;
+    font-weight: 200;
+    font-size: 1.3em;
+    border: 2px solid $text-color3;
+    margin: 0 10px;
+    width: fit-content;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 5px;
+
+    &:hover {
+        color:$text-color2;
+        background-color: $text-color5;
+        border: 2px solid $text-color4;
+    }
 }
 
 
@@ -40,4 +66,10 @@
 .wordlist__input {
     width: 85%;
     height: 80%;
+}
+
+//иконки действий
+.wordlist__actionIcon {
+    padding: 0px 5px;
+    cursor: pointer;
 }

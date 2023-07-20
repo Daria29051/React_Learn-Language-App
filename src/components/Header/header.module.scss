@@ -1,6 +1,5 @@
-@import './Mixin';
-@import './Typography';
-@import './Variables';
+@import '../../assets/styles/mixin.scss';
+@import '../../assets/styles/variables.scss';
 
 .header {
     display: flex;
@@ -12,7 +11,7 @@
     padding: 0em 4em;
 }
 
-.header__logo-part, .header__login-part  {
+.header__logoPart, .header__loginPart  {
     display: flex;
     flex-direction: row;
     gap: 2em;

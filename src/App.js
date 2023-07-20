@@ -1,9 +1,9 @@
-import Header from "./components/Header";
-import Home from "./components/Home";
-import Table from "./components/Table";
-import Learning from "./components/Learning";
-import Training from "./components/Training";
-import './assets/styles/Style.scss';
+import Header from "./components/Header/Header";
+import Home from "./components/Home/Home";
+import Table from "./components/Table/Table";
+import Learning from "./components/Learning/Learning";
+import Training from "./components/Training/Training";
+
 
 function App() {
   return (
@@ -16,5 +16,7 @@ function App() {
     </div>
   );
 }
+
+
 
 export default App;

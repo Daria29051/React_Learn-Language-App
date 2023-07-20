@@ -1,11 +1,11 @@
-import Flashcard from "./Flashcard";
-import '../assets/styles/Style.scss';
+import Flashcard from "../Flashcard/Flashcard";
+import st from './learning.module.scss';
 
 function Learning() {
   return (
     <>
-      <div className="learning">Learning</div>
-      <div className="learning__flashcards">
+      <div className={st.learning}>Learning</div>
+      <div className={st.learning__flashcards}>
       <Flashcard></Flashcard>
       <Flashcard></Flashcard>
       <Flashcard></Flashcard>

@@ -7,9 +7,6 @@ function Learning() {
       <div className={st.learning}>Learning</div>
       <div className={st.learning__flashcards}>
       <Flashcard></Flashcard>
-      <Flashcard></Flashcard>
-      <Flashcard></Flashcard>
-      <Flashcard></Flashcard>
       </div>
     </>
   );

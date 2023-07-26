@@ -4,7 +4,7 @@ import st from './learning.module.scss';
 function Learning() {
   return (
     <>
-      <div className={st.learning}>Learning</div>
+      <div className={st.learning}></div>
       <div className={st.learning__flashcards}>
       <Flashcard></Flashcard>
       </div>

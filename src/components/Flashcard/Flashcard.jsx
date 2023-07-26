@@ -19,6 +19,7 @@ class Flashcard extends React.Component {
   }
 render() {
   return (<>
+  <div className={st.block}>
   <h1 className={st.title}>Flashcards</h1>
     <div  className={st.container} >
     {flashcards.map((item, index) => (
@@ -28,6 +29,7 @@ render() {
 <button className={st.flashcard__button} onClick = {this.handleClick}>Проверить</button>
 </div>
     ))}
+  </div>
   </div>
   </>
   );

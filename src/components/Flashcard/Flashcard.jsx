@@ -12,12 +12,12 @@ class Flashcard extends React.Component {
   }
 
   handleChange = (index) => {
-   this.setState((prevState) => {
-    const updatedSelection = Array.from(prevState);
-    updatedSelection[index] = !updatedSelection[index];
-    console.log(updatedSelection);
-    return {pressed : updatedSelection[index]};
-   })
+    this.setState((prevState) => {
+      const updatedSelection = Array.from(prevState);
+      updatedSelection[index] = !updatedSelection[index];
+      console.log(updatedSelection);
+      return { pressed: updatedSelection[index] };
+    });
   };
 
   render() {

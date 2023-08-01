@@ -22,7 +22,7 @@ export default function Slider(props) {
     setSelectedIndex(selectedIndex + 1);
     console.log(selectedIndex);
   };
-  
+
   //  функция показа предыдущей карточки
   const showPrevCard = () => {
     setSelectedIndex(selectedIndex - 1);

@@ -50,7 +50,7 @@ class Table extends React.Component {
     <img src={cancel} alt="cancel"className={st.wordlist__actionIcon} title="Cancel"/></td>
 </tr>
 </thead>
-<tbody> { words.map((item, index) => (
+<tbody>{words.map((item, index) => (
     <tr className='wordlist__item' key={index}>
   <td>{item.english}</td>
   <td>{item.transcription}</td>
@@ -59,9 +59,7 @@ class Table extends React.Component {
     <img src={edit} alt="edit" className={st.wordlist__actionIcon} title="Edit"/>
     <img src={del} alt="delete"className={st.wordlist__actionIcon} title="Delete"/></td>
 </tr>
-))}
-
-</tbody>
+))}</tbody>
 </table>
 </div>
 );
@@ -81,7 +79,7 @@ class Table extends React.Component {
 <th>Options</th>
 </tr>
 </thead>
-<tbody> { words.map((item, index) => (
+<tbody>{words.map((item, index) => (
     <tr className='wordlist__item' key={index}>
   <td>{item.english}</td>
   <td>{item.transcription}</td>
@@ -90,9 +88,7 @@ class Table extends React.Component {
     <img src={edit} alt="edit" className={st.wordlist__actionIcon} title="Edit"/>
     <img src={del} alt="delete"className={st.wordlist__actionIcon} title="Delete"/></td>
 </tr>
-))}
-
-</tbody>
+))}</tbody>
 </table>
 </div>
   )

@@ -5,6 +5,9 @@ import Learning from "./components/Learning/Learning";
 import Training from "./components/Training/Training";
 import st from './assets/styles/App.scss';
 import Cardblock from "./components/Cardblock/Cardblock";
+import Slider from "./components/Slider/Slider";
+import flashcards from "./data/flashcard.json";
+
 
 
 function App() {
@@ -14,7 +17,8 @@ function App() {
       <Home></Home>
       <Table></Table>
       <Cardblock></Cardblock>
-      <Learning></Learning>
+      {/* <Learning></Learning> */}
+      <Slider flashcards={flashcards}></Slider>
       <Training></Training>
     </div>
   );

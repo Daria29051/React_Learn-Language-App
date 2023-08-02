@@ -35,13 +35,14 @@ export default function Slider(props) {
         <h1 className={st.slider__title}>Random card learning</h1>
         <div className={st.slider}>
           <button className={st.slider__button} onClick={showPrevCard}>
-            &larr;
+          <span className={st.slider__arrow}>&lt;</span>
           </button>
-          <Card item={flashcards[selectedIndex]}></Card>
+          <Card  item={flashcards[selectedIndex]}></Card>
           <button className={st.slider__button} onClick={showNextCard}>
-            &rarr;
+          <span className={st.slider__arrow}>&gt;</span>
           </button>
         </div>
+        <div className={st.slider__counter}>{selectedIndex+1} / {cardsIndexArray.length}</div>
       </div>
     </>
   );

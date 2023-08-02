@@ -1,9 +1,13 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import st from "./card.module.scss";
 
 export default function Card(props) {
   const [clicked, setClicked] = useState(false);
+  useEffect(() => {
+    setClicked(false);
+  }, [props.item]);
+
   {
     if (clicked) {
       return (

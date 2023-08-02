@@ -19,14 +19,22 @@ export default function Slider(props) {
 
   //  функция показа следующей карточки
   const showNextCard = () => {
+    if (selectedIndex < cardsIndexArray.length-1) {
     setSelectedIndex(selectedIndex + 1);
     console.log(selectedIndex);
+  } else {
+    setSelectedIndex(cardsIndexArray[0]);
+  }
   };
 
   //  функция показа предыдущей карточки
   const showPrevCard = () => {
+    if (selectedIndex > cardsIndexArray[0]) {
     setSelectedIndex(selectedIndex - 1);
     console.log(selectedIndex);
+  } else {
+    setSelectedIndex(cardsIndexArray.length-1);
+  }
   };
 
   return (
@@ -46,4 +54,5 @@ export default function Slider(props) {
       </div>
     </>
   );
-}
+} 
+

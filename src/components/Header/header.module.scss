@@ -1,23 +1,46 @@
-@import '../../assets/styles/mixin.scss';
-@import '../../assets/styles/variables.scss';
+@import "../../assets/styles/mixin.scss";
+@import "../../assets/styles/variables.scss";
 
+//header
 .header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    background-color: $bg-color1;
-    color: $text-color2;
-    padding: 0em 4em;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  grid-area: header;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $bg-color1;
+  color: $text-color2;
+  // border: 1px solid orange;
+  padding: 0px 20px;
 }
 
-.header__logoPart, .header__loginPart  {
-    display: flex;
-    flex-direction: row;
-    gap: 2em;
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100vw;
+  padding: 0px 35px;
+  // border: 1px solid orange;
+  margin: 0px 50px;
+}
 
+.navPages,
+.navLogin {
+  display: flex;
+  gap: 2em;
+}
+
+.headerLogo {
+  height: 80px;
+  cursor: pointer;
 }
 
 .header__title {
-    @include main-title;
+  @include main-title;
+  display: flex;
+  align-self: center;
 }

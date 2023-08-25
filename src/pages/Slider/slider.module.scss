@@ -1,14 +1,16 @@
 @import "../../assets/styles/mixin.scss";
 @import "../../assets/styles/variables.scss";
 
+
+
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  border-bottom: 1px solid $text-color3;
-  border-top: 1px solid $text-color3;
-  padding: 50px 0px;
+  background-color: $bg-color3;
+  height: 100%;
+
+ 
 }
 
 .slider {
@@ -18,6 +20,10 @@
   align-items: center;
   gap: 20px;
   padding: 20px;
+}
+
+.slider__title {
+  @include main-title;
 }
 
 .slider__button {
@@ -44,4 +50,8 @@
 
 .slider__arrow{
     font-size: 2.5em;
+}
+
+.slider__counter {
+  color: $text-color6;
 }

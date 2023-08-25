@@ -1,25 +1,33 @@
-import Register from "../Register/Register";
-import Login from "../Login/Login";
+
+import React from 'react';
 import st from './header.module.scss';
 import logo from '../../assets/icons/logo.png';
+import Customlink from '../CustomLink/CustomLink';
+import { useNavigate } from 'react-router-dom';
 
 
-function Header() {
+
+
+export default function Header() {
+  const navigate = useNavigate();
+  const navigateHome = () => {
+    navigate('/');
+  }
+
   return (
-
-      <div className={st.header}>
-        <div className={st.header__logoPart}>
-        <img src={logo} alt="logo" className={st.header__logo}/>
-        <p className={st.header__title}> Make English  a part of your life</p>
+    <header className={st.header}>
+    <img src={logo} alt="logo" className={st.headerLogo} onClick={navigateHome}/>
+      <nav className={st.nav}>
+        <div className={st.navPages}>
+        <Customlink to='/' className={st.navLink}>Home</Customlink>
+        <Customlink to='/cards' className={st.navLink}>Cards</Customlink>
+        <Customlink to='/game'className={st.navLink}>Game</Customlink>
         </div>
-
-        <div className={st.header__loginPart}>
-        <Register></Register>
-        <Login></Login>
+        <div className={st.navLogin}>
+        <Customlink to='/login' className={st.navLink}>Login</Customlink>
+        <Customlink to='/register' className={st.navLink}>Register</Customlink>
         </div>
-      </div>
-
-  );
+      </nav>
+    </header>
+  )
 }
-
-export default Header;

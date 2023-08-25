@@ -1,0 +1,26 @@
+@import "../../assets/styles/mixin.scss";
+@import "../../assets/styles/variables.scss";
+
+.chosen {
+  color: $bg-color4;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 1.3em;
+
+  &:hover {
+    color: $text-color5;
+  }
+}
+
+.notChosen {
+  color: $bg-color2;
+  text-decoration: none;
+  font-weight: 200;
+  font-size: 1.3em;
+
+  &:hover {
+    color: $text-color5;
+    font-weight: 400;
+    font-size: 1.3em;
+  }
+}

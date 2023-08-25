@@ -1,14 +1,14 @@
 @import "../../assets/styles/mixin.scss";
 @import "../../assets/styles/variables.scss";
 
-.block {
+.cardblock {
   background-color: $bg-color3;
   padding: 0.5em 0;
   border-top: 1px solid $text-color3;
 }
 
 .title {
-  text-align: center;
+  @include main-title;
 }
 .container {
   display: grid;

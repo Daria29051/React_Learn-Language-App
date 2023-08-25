@@ -1,0 +1,39 @@
+@import "../../assets/styles/mixin.scss";
+@import "../../assets/styles/variables.scss";
+
+//layout
+
+html {
+  height: 100%;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+.wrapper {
+  position: relative;
+  display: grid;
+  height: 100vh;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "header header header"
+    "main main main"
+    "footer footer footer";
+}
+
+
+//main
+.main {
+  grid-area: main;
+  margin-top: 80px;
+}
+
+//footer
+.footer {
+  grid-area: footer;
+  height: 50px;
+  background-color: $bg-color1;
+}

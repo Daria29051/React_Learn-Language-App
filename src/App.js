@@ -6,6 +6,7 @@ import Cardblock from "./pages/Cardblock/Cardblock";
 import Slider from "./pages/Slider/Slider";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import Header from "./components/Header/Header";
+import Table from "./components/Table/Table";
 
 function App() {
   return (

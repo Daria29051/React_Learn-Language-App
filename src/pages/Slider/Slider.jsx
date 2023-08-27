@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useState} from "react";
 import Card from "../../components/Card/Card";
 import st from "./slider.module.scss";
 

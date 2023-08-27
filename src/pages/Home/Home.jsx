@@ -1,8 +1,9 @@
-
-import st from './home.module.scss';
-import mainImg from '../../assets/img/home/main-img.jpg';
-import Table from '../../components/Table/Table';
+import React from "react";
 import { useNavigate } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
+import Table from '../../components/Table/Table';
+import mainImg from '../../assets/img/home/main-img.jpg';
+import st from './home.module.scss';
 
 
 function Home() {
@@ -22,12 +23,12 @@ function Home() {
       Желаем приятного путешествия! </p>
       <p className={st.home__paragraph}>Hello, dear friend!<br/> If you are reading this text, then it's time to learn English.<br/> Our team hopes that the upcoming classes will be not only useful and effective for you, but also exciting and inspiring.<br/>
       We wish you a pleasant trip!</p>
-      <button className={st.button} >ADD NEW WORDS</button>
+      <button className={st.button} ><HashLink smooth to='/#table' className={st.buttonLink}>ADD NEW WORDS</HashLink></button>
       <button className={st.button} onClick={goToCards}>STUDY CARDS</button>
       </div>
       </div>
       </div>
-      <div className={st.table}><Table/></div>
+      <div className={st.table} id='table'><Table/></div>
       </div>
 
   );

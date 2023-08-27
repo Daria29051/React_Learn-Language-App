@@ -1,7 +1,7 @@
 import React from "react";
-import st from "./notfound.module.scss";
-import gif from "../../assets/gif/errorGif.gif";
 import { useNavigate } from "react-router-dom";
+import gif from "../../assets/gif/errorGif.gif";
+import st from "./notfound.module.scss";
 
 export default function NotFoundPage() {
   const navigate = useNavigate();

@@ -1,12 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import st from "./assets/styles/app.module.scss";
-import flashcards from "./data/flashcard.json";
-import Home from "./pages/Home/Home";
-import Cardblock from "./pages/Cardblock/Cardblock";
-import Slider from "./pages/Slider/Slider";
-import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+import {Home, Cardblock, Slider, NotFoundPage} from '../src/pages';
 import Header from "./components/Header/Header";
 import Table from "./components/Table/Table";
+import flashcards from "./data/flashcard.json";
+import st from "./assets/styles/app.module.scss";
+
 
 function App() {
   return (
@@ -16,6 +14,7 @@ function App() {
         <main className={st.main}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="#table" element={<Table/>}/>
             <Route path="/cards" element={<Cardblock />} />
             <Route path="/game" element={<Slider flashcards={flashcards} />} />
             <Route path="*" element={<NotFoundPage />} />

@@ -1,10 +1,10 @@
 import React from 'react';
 import words from '../../data/words.json'
-import st from './table.module.scss';
 import edit from '../../assets/icons/edit.png';
 import del from '../../assets/icons/delete.png';
 import save from '../../assets/icons/save.png';
 import cancel from '../../assets/icons/cancel.png';
+import st from './table.module.scss';
 
 
 

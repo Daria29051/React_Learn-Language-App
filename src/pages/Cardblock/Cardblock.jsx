@@ -1,6 +1,7 @@
+import React from "react";
 import Card from "../../components/Card/Card"
-import st from "./cardblock.module.scss";
 import flashcards from "../../data/flashcard.json";
+import st from "./cardblock.module.scss";
 
 export default function Cardblock() {
   return (

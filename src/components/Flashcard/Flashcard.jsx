@@ -1,6 +1,6 @@
 import React from "react";
-import st from "./flashcard.module.scss";
 import flashcards from "../../data/flashcard.json";
+import st from "./flashcard.module.scss";
 
 class Flashcard extends React.Component {
   constructor(props) {

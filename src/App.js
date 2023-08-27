@@ -14,7 +14,6 @@ function App() {
         <main className={st.main}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="#table" element={<Table/>}/>
             <Route path="/cards" element={<Cardblock />} />
             <Route path="/game" element={<Slider flashcards={flashcards} />} />
             <Route path="*" element={<NotFoundPage />} />

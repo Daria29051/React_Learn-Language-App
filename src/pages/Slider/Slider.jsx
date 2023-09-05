@@ -1,10 +1,13 @@
 import React from "react";
-import { useState} from "react";
+import { useState, useEffect } from "react";
 import Card from "../../components/Card/Card";
 import st from "./slider.module.scss";
 
 export default function Slider(props) {
   const flashcards = props.flashcards;
+  const [learnt, setLearnt] = useState(0);
+
+
 
   let cardsIndexArray = []; //массив с индексами карточек
   let cardIndex; // индекс карточки
@@ -17,6 +20,9 @@ export default function Slider(props) {
 
   // задаем состояние - начальный индекс карточки к показу 0
   const [selectedIndex, setSelectedIndex] = useState(cardsIndexArray[0]);
+
+
+
 
   //  функция показа следующей карточки
   const showNextCard = () => {
@@ -38,6 +44,8 @@ export default function Slider(props) {
   }
   };
 
+
+
   return (
     <>
       <div className={st.container}>
@@ -46,12 +54,17 @@ export default function Slider(props) {
           <button className={st.slider__button} onClick={showPrevCard}>
           <span className={st.slider__arrow}>&lt;</span>
           </button>
-          <Card  item={flashcards[selectedIndex]}></Card>
+          <Card
+          item={flashcards[selectedIndex]}
+          learnt = {learnt}
+          setLearnt={setLearnt}>
+          </Card>
           <button className={st.slider__button} onClick={showNextCard}>
           <span className={st.slider__arrow}>&gt;</span>
           </button>
         </div>
         <div className={st.slider__counter}>{selectedIndex+1} / {cardsIndexArray.length}</div>
+        <div className={st.slider__learnt}>Изучено слов: <strong>{learnt}</strong></div>
       </div>
     </>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import Tablerow from '../Tablerow/Tablerow';
 import words from '../../data/words.json'
 import edit from '../../assets/icons/edit.png';
 import del from '../../assets/icons/delete.png';
@@ -10,13 +11,44 @@ import st from './table.module.scss';
 
 
 export default function Table() {
+
   const [visibility, setVisibility] = useState(false);
   const [pressed, setPressed] = useState(false);
+  const [wordInputValue, setWordInputValue] = useState('');
+  const [transcriptionInputValue, setTranscriptionInputValue]= useState('');
+  const [translationInputValue, setTranslationInputValue]= useState('');
+  const [wordList, setWordlist] = useState(words);
+
+
+
 
   const handleClick = () => {
     setVisibility(!visibility);
     setPressed(!pressed);
   }
+
+  const clearFields = () => {
+    setWordInputValue('');
+    setTranscriptionInputValue('');
+    setTranslationInputValue('');
+  }
+
+  const newWord = {
+    "id":"",
+    "english": wordInputValue,
+    "transcription": transcriptionInputValue,
+    "russian":translationInputValue,
+    "tags":"",
+  }
+
+  const addNewWord = () => {
+    setWordlist(prevState=>[newWord, ...prevState])
+    console.log(wordList);
+    console.log(newWord);
+  }
+
+
+  
   return (
 <div className={st.wordlist}>
 <h1 className={st.wordlist__title} >List of words</h1>
@@ -33,26 +65,21 @@ export default function Table() {
 </tr>
 {visibility ?
 <tr className={st.wordlist__inputRow}>
-    <td><input className={st.wordlist__input} type="text" placeholder="Word"></input></td>
-    <td><input className={st.wordlist__input}  type="text" placeholder="Transcription"></input></td>
-    <td><input className={st.wordlist__input}  type="text" placeholder="Translation"></input></td>
+    <td><input className={st.wordlist__input} type="text" placeholder="Word" value={wordInputValue} onChange={(e) => setWordInputValue(e.target.value)}></input></td>
+    <td><input className={st.wordlist__input}  type="text" placeholder="Transcription" value={transcriptionInputValue} onChange={(e) => setTranscriptionInputValue(e.target.value)}></input></td>
+    <td><input className={st.wordlist__input}  type="text" placeholder="Translation" value={translationInputValue} onChange={(e) => setTranslationInputValue(e.target.value)}></input></td>
     <td>
-    <img src={save} alt="save" className={st.wordlist__actionIcon} title="Save"/>
-    <img src={cancel} alt="cancel"className={st.wordlist__actionIcon} title="Cancel"/></td>
+    <img src={save} alt="save" className={st.wordlist__actionIcon} title="Save"onClick={addNewWord}/>
+    <img src={cancel} alt="delete"className={st.wordlist__actionIcon} title="Delete" onClick={clearFields}/></td>
 </tr> : ''
 }
 </thead>
-<tbody>{words.map((item, index) => (
-    <tr className='wordlist__item' key={index}>
-  <td>{item.english}</td>
-  <td>{item.transcription}</td>
-  <td>{item.russian}</td>
-  <td>
-    <img src={edit} alt="edit" className={st.wordlist__actionIcon} title="Edit"/>
-    <img src={del} alt="delete"className={st.wordlist__actionIcon} title="Delete"/></td>
-</tr>
-))}</tbody>
+<tbody>
+ <Tablerow wordList={wordList}/>
+ </tbody>
 </table>
 </div>
   )
 }
+
+

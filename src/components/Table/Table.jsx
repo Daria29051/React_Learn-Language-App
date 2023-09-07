@@ -15,12 +15,8 @@ export default function Table() {
   const [transcriptionInputValue, setTranscriptionInputValue] = useState("");
   const [translationInputValue, setTranslationInputValue] = useState("");
   const [wordList, setWordlist] = useState(words);
-  const [errorList, setErrorList]= useState([]);
-
-
-  useEffect(()=> {
-    setErrorList(errorList);
-  }, [errorList]);
+  const [errorList, setErrorList] = useState([]);
+  let errors = [];
 
   //смена кнопки Stud words
   const handleClick = () => {
@@ -43,59 +39,60 @@ export default function Table() {
     tags: "",
   };
 
-
-//проверка правильности заполнения инпутов
+  //проверка правильности заполнения инпутов
   const testInputs = () => {
-    setErrorList([]);
+    errors = [];
     const testEnglishLetters = /^[a-z]+$/i;
     const testTranscription = /^\[[a-z:\.ˈΛɑəeɛɜɔоɪʊæŋʒʤʃθðː\s]+\]/;
     const testRussianLetters = /^[а-я]+$/i;
- if (!testEnglishLetters.test(wordInputValue)) {
-  errorList.push('Используйте английские буквы для ввода слова.');
- }
+    if (!testEnglishLetters.test(wordInputValue)) {
+      errors.push("Используйте английские буквы для ввода слова.");
+    }
 
- if (!testTranscription.test(transcriptionInputValue)) {
-  errorList.push('Проверьте правильность ввода транскрипции.');
- }
+    if (!testTranscription.test(transcriptionInputValue)) {
+      errors.push("Проверьте правильность ввода транскрипции.");
+    }
 
- if (!testRussianLetters.test(translationInputValue)) {
-  errorList.push('Используйте русские буквы для ввода перевода.');
- }
+    if (!testRussianLetters.test(translationInputValue)) {
+      errors.push("Используйте русские буквы для ввода перевода.");
+    }
 
- if (wordInputValue === '') {
-  errorList.push('Заполните поле ввода слова.');
- } 
+    if (wordInputValue === "") {
+      errors.push("Заполните поле ввода слова.");
+    }
 
- if (transcriptionInputValue === '') {
-  errorList.push('Заполните поле ввода транскрипции.');
- } 
+    if (transcriptionInputValue === "") {
+      errors.push("Заполните поле ввода транскрипции.");
+    }
 
- if (translationInputValue === '') {
-  errorList.push('Заполните поле ввода перевода.');
- } 
+    if (translationInputValue === "") {
+      errors.push("Заполните поле ввода перевода.");
+    }
 
-
- console.log(errorList);
- return errorList;
-
-    
+    console.log(errors);
+    setErrorList(errors);
   };
 
-//добавление нового слова в таблицу
+  //добавление нового слова в таблицу
   const addNewWord = () => {
-    testInputs();
-    if (errorList.length === 0) {
-    setWordlist(prevState => [newWord, ...prevState]);
-    setWordInputValue('');
-    setTranscriptionInputValue('');
-    setTranslationInputValue('');
-    console.log(wordList);
-    console.log(newWord);
-  } else {
-    return errorList;
-  }
+    if (errors.length === 0) {
+      setWordlist((prevState) => [newWord, ...prevState]);
+      setWordInputValue("");
+      setTranscriptionInputValue("");
+      setTranslationInputValue("");
+      setErrorList([]);
+      console.log(wordList);
+      console.log(newWord);
+    } else {
+      setErrorList(errors);
+    }
+  };
 
-  }
+  //проверяем инпуты и добавляем слово в таблицу, если всё корректно заполнено
+  const testInputsAndAddWord = () => {
+    testInputs();
+    addNewWord();
+  };
 
   return (
     <div className={st.wordlist}>
@@ -105,9 +102,9 @@ export default function Table() {
           {pressed ? "Study words" : "Add a new word"}
         </button>
       </div>
-     <div className={st.wordlist__errorList}>
-     {errorList.length !==0 ? errorList : ''}
-     </div>
+      <div className={st.wordlist__errorList}>
+        {errorList.length !== 0 ? errorList : ""}
+      </div>
       <table className={st.wordlist__table}>
         <thead>
           <tr>
@@ -151,7 +148,7 @@ export default function Table() {
                   alt="save"
                   className={st.wordlist__actionIcon}
                   title="Save"
-                  onClick={addNewWord}
+                  onClick={testInputsAndAddWord}
                 />
                 <img
                   src={cancel}

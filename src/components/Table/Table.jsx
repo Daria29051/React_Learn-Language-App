@@ -45,6 +45,15 @@ export default function Table() {
     const testEnglishLetters = /^[a-z]+$/i;
     const testTranscription = /^\[[a-z:\.ˈΛɑəeɛɜɔоɪʊæŋʒʤʃθðː\s]+\]/;
     const testRussianLetters = /^[а-я]+$/i;
+
+    if (
+      wordInputValue === "" ||
+      transcriptionInputValue === "" ||
+      translationInputValue === ""
+    ) {
+      errors.push("Заполните все поля ввода.");
+    }
+
     if (!testEnglishLetters.test(wordInputValue)) {
       errors.push("Используйте английские буквы для ввода слова.");
     }
@@ -55,18 +64,6 @@ export default function Table() {
 
     if (!testRussianLetters.test(translationInputValue)) {
       errors.push("Используйте русские буквы для ввода перевода.");
-    }
-
-    if (wordInputValue === "") {
-      errors.push("Заполните поле ввода слова.");
-    }
-
-    if (transcriptionInputValue === "") {
-      errors.push("Заполните поле ввода транскрипции.");
-    }
-
-    if (translationInputValue === "") {
-      errors.push("Заполните поле ввода перевода.");
     }
 
     console.log(errors);
@@ -103,7 +100,11 @@ export default function Table() {
         </button>
       </div>
       <div className={st.wordlist__errorList}>
-        {errorList.length !== 0 ? errorList : ""}
+        {errorList.length !== 0
+          ? errorList.map((item) => (
+              <div className={st.wordlist__errorList - item}>{item}</div>
+            ))
+          : ""}
       </div>
       <table className={st.wordlist__table}>
         <thead>

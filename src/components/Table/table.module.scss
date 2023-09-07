@@ -1,10 +1,9 @@
-@import '../../assets/styles/mixin.scss';
-@import '../../assets/styles/variables.scss';
-
+@import "../../assets/styles/mixin.scss";
+@import "../../assets/styles/variables.scss";
 
 .wordlist {
-    padding: 1.5em 0em;
-    border-top: 1px solid $text-color3;
+  padding: 1.5em 0em;
+  border-top: 1px solid $text-color3;
 }
 
 .wordlist__title {
@@ -12,67 +11,76 @@
 }
 
 .wordlist__optionButtonsContainer {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1.5em;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5em;
 }
 
 .wordlist__optionButton {
-    background-color: $bg-color3;
-    color: $text-color3;
-    font-weight: 200;
-    font-size: 1.3em;
-    border: 2px solid $text-color3;
-    margin: 0 10px;
-    width: fit-content;
-    height: 40px;
-    cursor: pointer;
-    border-radius: 5px;
+  background-color: $bg-color3;
+  color: $text-color3;
+  font-weight: 200;
+  font-size: 1.3em;
+  border: 2px solid $text-color3;
+  margin: 0 10px;
+  width: fit-content;
+  height: 40px;
+  cursor: pointer;
+  border-radius: 5px;
 
-    &:hover {
-        color:$text-color2;
-        background-color: $text-color5;
-        border: 2px solid $text-color4;
-    }
+  &:hover {
+    color: $text-color2;
+    background-color: $text-color5;
+    border: 2px solid $text-color4;
+  }
 }
 
+.wordlist__table {
+  margin: 15px auto;
+  border-collapse: collapse;
+  border: 2px solid $text-color3;
+  width: 60%;
 
-.wordlist__table{
-    margin: auto;
-    border-collapse: collapse;
-    border: 2px solid $text-color3;
-    width: 60%;
+  th,
+  td {
+    border: 1px solid $text-color3;
+    text-align: center;
+    padding: 5px;
+  }
 
-    th, td {
-        border: 1px solid $text-color3;
-        text-align: center;
-        padding: 5px;
-     }
-
-     th {
-        background-color: $bg-color1;
-        color:$text-color2;
-        font-weight: 300;
-        font-size: 1.5em;
-     }
+  th {
+    background-color: $bg-color1;
+    color: $text-color2;
+    font-weight: 300;
+    font-size: 1.5em;
+  }
 }
 
 //ряд ввода новых слов
 
 .wordlist__inputRow {
-    background-color: $bg-color3;
+  background-color: $bg-color3;
 }
 .wordlist__input {
-    width: 85%;
-    height: 80%;
+  width: 85%;
+  height: 80%;
 }
 
 //иконки действий
 .wordlist__actionIcon {
-    padding: 0px 5px;
-    cursor: pointer;
+  padding: 0px 5px;
+  cursor: pointer;
 }
 
 .wordlist__errorList {
-    color: red;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: red;
+}
+
+.wordlist__errorList-item {
+  margin: 0;
+  padding: 0;
 }

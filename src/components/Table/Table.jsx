@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import classNames from 'classnames';
 import Tablerow from "../Tablerow/Tablerow";
 import words from "../../data/words.json";
 import edit from "../../assets/icons/edit.png";
@@ -17,6 +18,9 @@ export default function Table() {
   const [wordList, setWordlist] = useState(words);
   const [errorList, setErrorList] = useState([]);
   let errors = [];
+  let wordClassNames = classNames(st.wordlist__input, wordInputValue ==='' ? st.inputError : st.wordlist__input);
+  let transcriptionClassNames = classNames(st.wordlist__input, transcriptionInputValue ==='' ? st.inputError : st.wordlist__input);
+  let translationClassNames = classNames(st.wordlist__input, translationInputValue ==='' ? st.inputError : st.wordlist__input);
 
   //смена кнопки Stud words
   const handleClick = () => {
@@ -38,6 +42,7 @@ export default function Table() {
     russian: translationInputValue,
     tags: "",
   };
+
 
   //проверка правильности заполнения инпутов
   const testInputs = () => {
@@ -101,8 +106,8 @@ export default function Table() {
       </div>
       <div className={st.wordlist__errorList}>
         {errorList.length !== 0
-          ? errorList.map((item) => (
-              <div className={st.wordlist__errorList - item}>{item}</div>
+          ? errorList.map((item, index) => (
+              <div className={st.wordlist__errorListItem} key={index}>{item}</div>
             ))
           : ""}
       </div>
@@ -118,8 +123,7 @@ export default function Table() {
             <tr className={st.wordlist__inputRow}>
               <td>
                 <input
-                  className={st.wordlist__input}
-                  type="text"
+                  className={wordClassNames}
                   placeholder="Word"
                   value={wordInputValue}
                   onChange={(e) => setWordInputValue(e.target.value)}
@@ -127,7 +131,7 @@ export default function Table() {
               </td>
               <td>
                 <input
-                  className={st.wordlist__input}
+                  className={transcriptionClassNames}
                   type="text"
                   placeholder="Transcription"
                   value={transcriptionInputValue}
@@ -136,7 +140,7 @@ export default function Table() {
               </td>
               <td>
                 <input
-                  className={st.wordlist__input}
+                  className={translationClassNames}
                   type="text"
                   placeholder="Translation"
                   value={translationInputValue}

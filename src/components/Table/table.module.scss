@@ -66,6 +66,12 @@
   height: 80%;
 }
 
+.inputError {
+  width: 85%;
+  height: 80%;
+  border: 2px solid red;
+}
+
 //иконки действий
 .wordlist__actionIcon {
   padding: 0px 5px;
@@ -80,7 +86,7 @@
   color: red;
 }
 
-.wordlist__errorList-item {
+.wordlist__errorListItem {
   margin: 0;
   padding: 0;
 }

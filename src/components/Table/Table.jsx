@@ -22,11 +22,20 @@ export default function Table() {
   let transcriptionClassNames = classNames(st.wordlist__input, transcriptionInputValue ==='' ? st.inputError : st.wordlist__input);
   let translationClassNames = classNames(st.wordlist__input, translationInputValue ==='' ? st.inputError : st.wordlist__input);
 
-  //смена кнопки Stud words
+
+
+  //смена кнопки Study words
   const handleClick = () => {
     setVisibility(!visibility);
     setPressed(!pressed);
   };
+
+  //скрываем вывод ошибок и очищаем поля ввода при клике на кнопку Study words/Add word
+  useEffect(()=> {
+    setErrorList([]);
+    clearFields();
+  }
+  , [pressed]);
 
   //очистка полей инпутов
   const clearFields = () => {

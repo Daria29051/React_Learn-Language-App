@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import Context from "../../context/Context";
+import { useContext } from 'react';
 import classNames from 'classnames';
 import Tablerow from "../Tablerow/Tablerow";
-import words from "../../data/words.json";
 import edit from "../../assets/icons/edit.png";
 import del from "../../assets/icons/delete.png";
 import save from "../../assets/icons/save.png";
@@ -10,12 +11,13 @@ import cancel from "../../assets/icons/cancel.png";
 import st from "./table.module.scss";
 
 export default function Table() {
+  const wordsApi = useContext(Context);
   const [visibility, setVisibility] = useState(false);
   const [pressed, setPressed] = useState(false);
   const [wordInputValue, setWordInputValue] = useState("");
   const [transcriptionInputValue, setTranscriptionInputValue] = useState("");
   const [translationInputValue, setTranslationInputValue] = useState("");
-  const [wordList, setWordlist] = useState(words);
+  const [wordList, setWordlist] = useState(wordsApi);
   const [errorList, setErrorList] = useState([]);
   let errors = [];
   let wordClassNames = classNames(st.wordlist__input, wordInputValue ==='' ? st.inputError : st.wordlist__input);
@@ -104,6 +106,7 @@ export default function Table() {
     testInputs();
     addNewWord();
   };
+
 
   return (
     <div className={st.wordlist}>

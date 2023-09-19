@@ -10,7 +10,6 @@ import Context from '../../context/Context';
 export default function Tablerow() {
 
   const wordsApi = useContext(Context);
-  console.log(wordsApi);
 
   return (
     <>

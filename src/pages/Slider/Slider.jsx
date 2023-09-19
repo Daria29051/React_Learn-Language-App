@@ -1,10 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useContext } from 'react';
+import Context from '../../context/Context';
 import Card from "../../components/Card/Card";
 import st from "./slider.module.scss";
 
 export default function Slider(props) {
-  const flashcards = props.flashcards;
+  const wordsApi = useContext(Context);
   const [learnt, setLearnt] = useState(0);
 
 
@@ -12,8 +14,8 @@ export default function Slider(props) {
   let cardsIndexArray = []; //массив с индексами карточек
   let cardIndex; // индекс карточки
 
-  for (let card of flashcards) {
-    cardIndex = flashcards.indexOf(card);
+  for (let card of wordsApi) {
+    cardIndex = wordsApi.indexOf(card);
     cardsIndexArray.push(cardIndex);
   }
   // console.log(cardsIndexArray);
@@ -55,7 +57,7 @@ export default function Slider(props) {
           <span className={st.slider__arrow}>&lt;</span>
           </button>
           <Card
-          item={flashcards[selectedIndex]}
+          item={wordsApi[selectedIndex]}
           learnt = {learnt}
           setLearnt={setLearnt}>
           </Card>

@@ -178,7 +178,7 @@ export default function Table() {
           )}
         </thead>
         <tbody>
-          <Tablerow wordList={wordList} />
+          <Tablerow />
         </tbody>
       </table>
     </div>

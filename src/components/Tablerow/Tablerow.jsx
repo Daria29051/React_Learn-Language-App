@@ -2,15 +2,19 @@ import React from 'react';
 import edit from '../../assets/icons/edit.png';
 import del from '../../assets/icons/delete.png';
 import st from './tablerow.module.scss';
+import { useContext } from 'react';
+import Context from '../../context/Context';
 
 
 
-export default function Tablerow(props) {
+export default function Tablerow() {
 
-const {wordList} = props;
+  const wordsApi = useContext(Context);
+  console.log(wordsApi);
+
   return (
     <>
-         {wordList.map((item, index) => (
+         {wordsApi.map((item, index) => (
     <tr className='wordlist__item' key={index}>
   <td>{item.english}</td>
   <td>{item.transcription}</td>

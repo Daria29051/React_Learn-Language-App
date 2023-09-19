@@ -1,4 +1,5 @@
 {
+  "proxy": "http://itgirlschool.justmakeit.ru",
   "name": "languageapp",
   "version": "0.1.0",
   "private": true,

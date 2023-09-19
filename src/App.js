@@ -4,6 +4,10 @@ import Header from "./components/Header/Header";
 import Table from "./components/Table/Table";
 import flashcards from "./data/flashcard.json";
 import st from "./assets/styles/app.module.scss";
+import ContextProvider from "./context/ContextProvider";
+import Tablerow from "./components/Tablerow/Tablerow";
+
+
 
 
 function App() {

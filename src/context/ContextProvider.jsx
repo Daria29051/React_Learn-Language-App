@@ -7,11 +7,31 @@ import App from "../App";
 function ContextProvider() {
   let [wordsApi, setWordsApi] = useState([]);
 
-  useEffect(() => {
+
+  useEffect(()=> {
+    try {
     fetch("http://itgirlschool.justmakeit.ru/api/words")
-      .then((response) => response.json())
-      .then((response) => setWordsApi((wordsApi = response)));
-  }, []);
+   .then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error('Ошибка загрузки данных');
+    }
+   })
+   .then((response) => setWordsApi((wordsApi = response)));
+  } catch(error) {
+ console.log(`Возникла проблема: ${error.message}. Пожалуйста, попробуйте позднее.`);
+  }
+  },[])
+
+
+
+  // useEffect(() => {
+  //   fetch("http://itgirlschool.justmakeit.ru/api/words")
+  //     .then((response) => response.json())
+  //     .then((response) => setWordsApi((wordsApi = response)));
+  // }, []);
+  
 
   console.log(wordsApi);
   

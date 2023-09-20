@@ -7,13 +7,13 @@ import Context from '../../context/Context';
 
 
 
-export default function Tablerow() {
+export default function Tablerow(props) {
 
-  const wordsApi = useContext(Context);
-
+  const wordList = props;
+  
   return (
     <>
-         {wordsApi.map((item, index) => (
+         {wordList.wordList.map((item, index) => (
     <tr className='wordlist__item' key={index}>
   <td>{item.english}</td>
   <td>{item.transcription}</td>

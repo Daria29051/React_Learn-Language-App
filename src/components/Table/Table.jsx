@@ -19,6 +19,7 @@ export default function Table() {
   const [translationInputValue, setTranslationInputValue] = useState("");
   const [wordList, setWordlist] = useState(wordsApi);
   const [errorList, setErrorList] = useState([]);
+  const [successEnter , setSuccessEnter] = useState('');
   let errors = [];
   let wordClassNames = classNames(st.wordlist__input, wordInputValue ==='' ? st.inputError : st.wordlist__input);
   let transcriptionClassNames = classNames(st.wordlist__input, transcriptionInputValue ==='' ? st.inputError : st.wordlist__input);
@@ -32,9 +33,10 @@ export default function Table() {
     setPressed(!pressed);
   };
 
-  //скрываем вывод ошибок и очищаем поля ввода при клике на кнопку Study words/Add word
+  //скрываем вывод ошибок и уведомление о добавлении слова, и очищаем поля ввода при клике на кнопку Study words/Add word
   useEffect(()=> {
     setErrorList([]);
+    setSuccessEnter('');
     clearFields();
   }
   , [pressed]);
@@ -94,10 +96,12 @@ export default function Table() {
       setTranscriptionInputValue("");
       setTranslationInputValue("");
       setErrorList([]);
+      setSuccessEnter('Новое слово успешно добавлено!')
       console.log(wordList);
       console.log(newWord);
     } else {
       setErrorList(errors);
+      setSuccessEnter('');
     }
   };
 
@@ -107,6 +111,7 @@ export default function Table() {
     addNewWord();
   };
 
+ 
 
   return (
     <div className={st.wordlist}>
@@ -122,6 +127,9 @@ export default function Table() {
               <div className={st.wordlist__errorListItem} key={index}>{item}</div>
             ))
           : ""}
+      </div>
+      <div className={st.wordlist__successEnter}>
+        {successEnter}
       </div>
       <table className={st.wordlist__table}>
         <thead>
@@ -181,7 +189,7 @@ export default function Table() {
           )}
         </thead>
         <tbody>
-          <Tablerow />
+          <Tablerow  wordList={wordList}/>
         </tbody>
       </table>
     </div>

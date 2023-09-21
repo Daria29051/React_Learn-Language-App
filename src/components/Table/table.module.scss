@@ -99,3 +99,13 @@
   font-size: 1.2em;
   color: green;
 }
+
+
+//ошибка получения данных с сервера
+.wordlist_errorMessage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2em;
+  color: $text-color4;
+}

@@ -9,8 +9,9 @@ function ContextProvider() {
   let [errorApi, setErrorApi]= useState(null);
 
 
+
   useEffect(()=> {
-    try {
+
     fetch("http://itgirlschool.justmakeit.ru/api/words")
    .then((response) => {
     if (response.ok) {
@@ -19,12 +20,14 @@ function ContextProvider() {
       throw new Error('Ошибка загрузки данных');
     }
    })
-   .then((response) => setWordsApi((wordsApi = response)));
-  } catch(error) {
- console.log(`Возникла проблема: ${error.message}. Пожалуйста, попробуйте позднее.`);
- setErrorApi(errorApi = error);
-  }
+
+   .then((response) => setWordsApi((wordsApi = response)))
+   .catch((error) =>
+ setErrorApi((errorApi = error)));
+
   },[])
+
+  console.log(errorApi);
 
 
   return (

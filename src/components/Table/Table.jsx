@@ -110,7 +110,7 @@ export default function Table() {
     addNewWord();
   };
 
- 
+ console.log(errorApi);
 
   return (
     <div className={st.wordlist}>

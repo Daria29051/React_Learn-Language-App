@@ -6,6 +6,7 @@ import App from "../App";
 
 function ContextProvider() {
   let [wordsApi, setWordsApi] = useState([]);
+  let [errorApi, setErrorApi]= useState(null);
 
 
   useEffect(()=> {
@@ -21,29 +22,16 @@ function ContextProvider() {
    .then((response) => setWordsApi((wordsApi = response)));
   } catch(error) {
  console.log(`Возникла проблема: ${error.message}. Пожалуйста, попробуйте позднее.`);
+ setErrorApi(errorApi = error);
   }
   },[])
 
 
-
-  // useEffect(() => {
-  //   fetch("http://itgirlschool.justmakeit.ru/api/words")
-  //     .then((response) => response.json())
-  //     .then((response) => setWordsApi((wordsApi = response)));
-  // }, []);
-  
-
-  console.log(wordsApi);
-  
- if (wordsApi.length !== 0) {
   return (
-<Context.Provider value = {wordsApi}>
+<Context.Provider value = {{wordsApi , errorApi}}>
   <App/>
 </Context.Provider>
   );
-} else {
-  return (<div>Ошибка</div>)
-}
 }
 
 export default ContextProvider;

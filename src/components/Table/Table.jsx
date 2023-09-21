@@ -11,7 +11,7 @@ import cancel from "../../assets/icons/cancel.png";
 import st from "./table.module.scss";
 
 export default function Table() {
-  const wordsApi = useContext(Context);
+  const {wordsApi , errorApi} = useContext(Context);
   const [visibility, setVisibility] = useState(false);
   const [pressed, setPressed] = useState(false);
   const [wordInputValue, setWordInputValue] = useState("");
@@ -24,7 +24,6 @@ export default function Table() {
   let wordClassNames = classNames(st.wordlist__input, wordInputValue ==='' ? st.inputError : st.wordlist__input);
   let transcriptionClassNames = classNames(st.wordlist__input, transcriptionInputValue ==='' ? st.inputError : st.wordlist__input);
   let translationClassNames = classNames(st.wordlist__input, translationInputValue ==='' ? st.inputError : st.wordlist__input);
-
 
 
   //смена кнопки Study words
@@ -189,7 +188,10 @@ export default function Table() {
           )}
         </thead>
         <tbody>
-          <Tablerow  wordList={wordList}/>
+          { errorApi === null ?
+          <Tablerow  wordList={wordList}/>  :
+          <div className={st.wordlist_errorMessage}>{`Возникла проблема: ${errorApi.message}. Пожалуйста, попробуйте позднее.`}</div>
+          }
         </tbody>
       </table>
     </div>

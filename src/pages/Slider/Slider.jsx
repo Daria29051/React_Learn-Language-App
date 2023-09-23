@@ -6,18 +6,23 @@ import Card from "../../components/Card/Card";
 import st from "./slider.module.scss";
 
 export default function Slider(props) {
-  const wordsApi = useContext(Context);
+  const {wordsApi} = useContext(Context);
   const [learnt, setLearnt] = useState(0);
 
-
+ 
 
   let cardsIndexArray = []; //массив с индексами карточек
   let cardIndex; // индекс карточки
 
+
+if (wordsApi.length !== 0) {
   for (let card of wordsApi) {
     cardIndex = wordsApi.indexOf(card);
     cardsIndexArray.push(cardIndex);
+    }
   }
+  
+
   // console.log(cardsIndexArray);
 
   // задаем состояние - начальный индекс карточки к показу 0
@@ -55,12 +60,15 @@ export default function Slider(props) {
         <div className={st.slider}>
           <button className={st.slider__button} onClick={showPrevCard}>
           <span className={st.slider__arrow}>&lt;</span>
-          </button>
+          </button> {
+          wordsApi.length !== 0 ?
           <Card
           item={wordsApi[selectedIndex]}
           learnt = {learnt}
           setLearnt={setLearnt}>
-          </Card>
+          </Card> :
+          <div> Нет данных</div>
+        }
           <button className={st.slider__button} onClick={showNextCard}>
           <span className={st.slider__arrow}>&gt;</span>
           </button>

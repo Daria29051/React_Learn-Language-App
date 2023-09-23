@@ -188,7 +188,7 @@ export default function Table() {
           )}
         </thead>
         <tbody>
-          { errorApi === null ?
+          { wordsApi.length !== 0 ?
           <Tablerow  wordList={wordList}/>  :
           <div className={st.wordlist_errorMessage}>{`Возникла проблема: ${errorApi.message}. Пожалуйста, попробуйте позднее.`}</div>
           }

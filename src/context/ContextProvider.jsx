@@ -12,7 +12,7 @@ function ContextProvider() {
       .then((response) => {
         if (response.ok) {
           if (Object.keys(response).length === 0) {
-            throw new Error("Нет данных.");
+            throw new Error("Нет слов для изучения");
           } else {
             console.log(response);
             return response;

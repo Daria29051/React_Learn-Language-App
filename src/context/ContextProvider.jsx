@@ -3,7 +3,7 @@ import React from "react";
 import Context from "./Context";
 import App from "../App";
 
-function ContextProvider() {
+function ContextProvider({children}) {
   let [wordsApi, setWordsApi] = useState([]);
   let [errorApi, setErrorApi] = useState([]);
   let [isLoading, setIsLoading] = useState(false);
@@ -33,9 +33,11 @@ function ContextProvider() {
   console.log(wordsApi);
   console.log(errorApi);
 
+  const value = {wordsApi, errorApi, isLoading}
+
   return (
-    <Context.Provider value={{ wordsApi, errorApi, isLoading }}>
-      <App />
+    <Context.Provider value={value}>
+      {children}
     </Context.Provider>
   );
 }

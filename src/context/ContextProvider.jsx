@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import Context from "./Context";
-import App from "../App";
+
 
 function ContextProvider({children}) {
   let [wordsApi, setWordsApi] = useState([]);

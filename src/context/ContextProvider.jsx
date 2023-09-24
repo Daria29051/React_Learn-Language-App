@@ -5,14 +5,18 @@ import App from "../App";
 
 function ContextProvider() {
   let [wordsApi, setWordsApi] = useState([]);
-  let [errorApi, setErrorApi] = useState(null);
+  let [errorApi, setErrorApi] = useState([]);
+  let [isLoading, setIsLoading] = useState(false);
+
 
   useEffect(() => {
+    setIsLoading(true);
     fetch("http://itgirlschool.justmakeit.ru/api/words")
       .then((response) => {
         if (response.ok) {
+          setIsLoading(false);
           if (Object.keys(response).length === 0) {
-            throw new Error("Нет слов для изучения");
+            throw new Error("Нет слов для изучения.");
           } else {
             console.log(response);
             return response;
@@ -30,7 +34,7 @@ function ContextProvider() {
   console.log(errorApi);
 
   return (
-    <Context.Provider value={{ wordsApi, errorApi }}>
+    <Context.Provider value={{ wordsApi, errorApi, isLoading }}>
       <App />
     </Context.Provider>
   );

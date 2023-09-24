@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
+import { useContext } from "react";
+import Context from "../../context/Context";
 import { HashLink } from 'react-router-hash-link';
 import Table from '../../components/Table/Table';
 import mainImg from '../../assets/img/home/main-img.jpg';
@@ -12,6 +14,8 @@ function Home() {
   const goToCards=()=> {
     navigate('/cards');
   }
+
+  const {isLoading} = useContext(Context);
 
   return (
   <div className={st.homepage}>
@@ -28,7 +32,7 @@ function Home() {
       </div>
       </div>
       </div>
-      <div className={st.table} id='table'><Table/></div>
+      {(isLoading) ? <p>Loading...</p> : <div className={st.table} id='table'><Table/></div> }
       </div>
 
   );

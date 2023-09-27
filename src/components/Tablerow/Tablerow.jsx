@@ -6,24 +6,15 @@ import { useContext } from "react";
 import Context from "../../context/Context";
 
 export default function Tablerow(props) {
-  const { setWordList, wordList } = props;
+  const { setWordList, wordList, deleteWord} = props;
   const { deleteWordFromServer } = useContext(Context);
 
   console.log(wordList);
 
-useEffect(()=> {
-  setWordList(wordList)
-}, 
-[wordList.length])
-
-  function deleteWord(id) {
-    let slicedWord = wordList.splice(id, 1);
-    console.log(slicedWord);
-    console.log(wordList);
-    setWordList(wordList);
-
-  }
-
+// useEffect(()=> {
+//   setWordList(wordList)
+// }, 
+// [wordList.length])
 
   return (
     <>

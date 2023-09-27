@@ -31,7 +31,10 @@ export default function Table() {
     setWordList(wordsApi);
   }, [wordsApi]);
 
-
+  useEffect(()=> {
+    setWordList(wordList)
+  }, 
+  [wordList.length])
 
   console.log(wordsApi);
   console.log(wordList);
@@ -130,6 +133,23 @@ export default function Table() {
 
  console.log(errorApi);
 
+
+ //удаление слова 
+ function deleteWord(id) {
+  let slicedWord = wordList.splice(id, 1);
+  console.log(slicedWord);
+  console.log(wordList);
+  return wordList;
+}
+
+
+useEffect(()=> {
+  setWordList(wordList)
+},
+[wordList.length])
+
+
+
   return (
     <div className={st.wordlist}>
       <h1 className={st.wordlist__title}>List of words</h1>
@@ -207,7 +227,7 @@ export default function Table() {
         </thead>
         <tbody>
           { wordList.length !== 0 ?
-          <Tablerow  wordList={wordList} setWordList={setWordList}/>  :
+          <Tablerow  wordList={wordList} setWordList={setWordList} deleteWord={deleteWord}/>  :
           <div className={st.wordlist_errorMessage}>{`Возникла проблема: ${errorApi.message}. Пожалуйста, попробуйте позднее.`}</div>
           }
         </tbody>

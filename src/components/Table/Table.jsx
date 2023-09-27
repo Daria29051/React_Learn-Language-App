@@ -11,20 +11,31 @@ import cancel from "../../assets/icons/cancel.png";
 import st from "./table.module.scss";
 
 export default function Table() {
-  const {wordsApi , errorApi} = useContext(Context);
-  const [visibility, setVisibility] = useState(false);
-  const [pressed, setPressed] = useState(false);
-  const [wordInputValue, setWordInputValue] = useState("");
-  const [transcriptionInputValue, setTranscriptionInputValue] = useState("");
-  const [translationInputValue, setTranslationInputValue] = useState("");
-  const [wordList, setWordlist] = useState(wordsApi);
-  const [errorList, setErrorList] = useState([]);
-  const [successEnter , setSuccessEnter] = useState('');
+  let {wordsApi , errorApi, addNewWordToServer} = useContext(Context);
+  let [visibility, setVisibility] = useState(false);
+  let [pressed, setPressed] = useState(false);
+  let [wordInputValue, setWordInputValue] = useState("");
+  let [transcriptionInputValue, setTranscriptionInputValue] = useState("");
+  let [translationInputValue, setTranslationInputValue] = useState("");
+  let [wordList, setWordList] = useState(wordsApi);
+  let [errorList, setErrorList] = useState([]);
+  let [successEnter , setSuccessEnter] = useState('');
   let errors = [];
   let wordClassNames = classNames(st.wordlist__input, wordInputValue ==='' ? st.inputError : st.wordlist__input);
   let transcriptionClassNames = classNames(st.wordlist__input, transcriptionInputValue ==='' ? st.inputError : st.wordlist__input);
   let translationClassNames = classNames(st.wordlist__input, translationInputValue ==='' ? st.inputError : st.wordlist__input);
 
+
+  useEffect(()=>{
+    setWordList(wordsApi);
+  }, [wordsApi]);
+
+
+
+  console.log(wordsApi);
+  console.log(wordList);
+  console.log(errorApi);
+  
 
   //смена кнопки Study words
   const handleClick = () => {
@@ -47,7 +58,7 @@ export default function Table() {
     setTranslationInputValue("");
   };
 
-  const newWord = {
+  let newWord = {
     id: "",
     english: wordInputValue,
     transcription: transcriptionInputValue,
@@ -90,14 +101,13 @@ export default function Table() {
   //добавление нового слова в таблицу
   const addNewWord = () => {
     if (errors.length === 0) {
-      setWordlist((prevState) => [newWord, ...prevState]);
+      setWordList((prevState) => [newWord, ...prevState]);
+      console.log(wordList);
       setWordInputValue("");
       setTranscriptionInputValue("");
       setTranslationInputValue("");
       setErrorList([]);
-      setSuccessEnter('Новое слово успешно добавлено!')
-      console.log(wordList);
-      console.log(newWord);
+      setSuccessEnter('Новое слово успешно добавлено!');
     } else {
       setErrorList(errors);
       setSuccessEnter('');
@@ -108,6 +118,7 @@ export default function Table() {
   const testInputsAndAddWord = () => {
     testInputs();
     addNewWord();
+    addNewWordToServer(newWord); //передаем новое слово на сервер
   };
 
  console.log(errorApi);
@@ -188,7 +199,7 @@ export default function Table() {
           )}
         </thead>
         <tbody>
-          { wordsApi.length !== 0 ?
+          { wordList.length !== 0 ?
           <Tablerow  wordList={wordList}/>  :
           <div className={st.wordlist_errorMessage}>{`Возникла проблема: ${errorApi.message}. Пожалуйста, попробуйте позднее.`}</div>
           }

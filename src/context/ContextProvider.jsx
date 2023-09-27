@@ -15,7 +15,7 @@ function ContextProvider({children}) {
     .then((response) => {
         if (response.ok) {
           setIsLoading(false);
-          console.log(response);
+          // console.log(response);
           return response;
         } else {
           throw new Error("Ошибка загрузки данных");
@@ -29,8 +29,8 @@ function ContextProvider({children}) {
 
 
  
-  console.log(wordsApi);
-  console.log(errorApi);
+  // console.log(wordsApi);
+  // console.log(errorApi);
 
 
 //функция проверки на пустой ответ от сервера

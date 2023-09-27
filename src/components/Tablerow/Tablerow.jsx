@@ -9,12 +9,9 @@ export default function Tablerow(props) {
   const { setWordList, wordList, deleteWord} = props;
   const { deleteWordFromServer } = useContext(Context);
 
-  console.log(wordList);
 
-// useEffect(()=> {
-//   setWordList(wordList)
-// }, 
-// [wordList.length])
+
+
 
   return (
     <>

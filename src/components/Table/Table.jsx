@@ -36,9 +36,9 @@ export default function Table() {
   }, 
   [wordList.length])
 
-  console.log(wordsApi);
-  console.log(wordList);
-  console.log(errorApi);
+  // console.log(wordsApi);
+  // console.log(wordList);
+  // console.log(errorApi);
   
 
   //смена кнопки Study words
@@ -131,7 +131,7 @@ export default function Table() {
     addNewWordToServer(newWord); //передаем новое слово на сервер
   };
 
- console.log(errorApi);
+//  console.log(errorApi);
 
 
  //удаление слова 

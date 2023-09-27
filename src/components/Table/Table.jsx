@@ -31,10 +31,7 @@ export default function Table() {
     setWordList(wordsApi);
   }, [wordsApi]);
 
-  useEffect(()=> {
-    setWordList(wordList)
-  }, 
-  [wordList.length])
+
 
   // console.log(wordsApi);
   // console.log(wordList);
@@ -124,7 +121,9 @@ export default function Table() {
     }
   };
 
-  //проверяем инпуты и добавляем слово в таблицу, если всё корректно заполнено
+
+
+  //ОБЩАЯ ФУНКЦИЯ ДОБАВЛЕНИЯ СЛОВА(ПРОВЕРКА ИНПУТОВ И ДОБАВЛЕНИЕ В СЛУЧАЕ КОРРЕКТНОГО ЗАПОЛНЕНИЯ)
   const testInputsAndAddWord = () => {
     testInputs();
     addNewWord();
@@ -133,22 +132,18 @@ export default function Table() {
 
 //  console.log(errorApi);
 
+//ФУНКЦИЯ УДАЛЕНИЯ СЛОВА
 
- //удаление слова 
- function deleteWord(id) {
-  let slicedWord = wordList.splice(id, 1);
-  console.log(slicedWord);
-  console.log(wordList);
-  return wordList;
-}
+const deleteWord = (item) => {
+    setSuccessEnter('');
+    setWordList(wordList.filter((word) => word.id !== item.id));
+    // console.log(wordList);
+  }
 
-
-useEffect(()=> {
-  setWordList(wordList)
-},
-[wordList.length])
-
-
+  useEffect(()=> {
+    setWordList(wordList);
+  },
+  [wordList.length])
 
   return (
     <div className={st.wordlist}>
@@ -227,7 +222,7 @@ useEffect(()=> {
         </thead>
         <tbody>
           { wordList.length !== 0 ?
-          <Tablerow  wordList={wordList} setWordList={setWordList} deleteWord={deleteWord}/>  :
+          <Tablerow wordList={wordList} deleteWord={deleteWord} />  :
           <div className={st.wordlist_errorMessage}>{`Возникла проблема: ${errorApi.message}. Пожалуйста, попробуйте позднее.`}</div>
           }
         </tbody>

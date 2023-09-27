@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import edit from "../../assets/icons/edit.png";
 import del from "../../assets/icons/delete.png";
 import st from "./tablerow.module.scss";
@@ -6,17 +6,16 @@ import { useContext } from "react";
 import Context from "../../context/Context";
 
 export default function Tablerow(props) {
-  const { setWordList, wordList, deleteWord} = props;
-  const { deleteWordFromServer } = useContext(Context);
+  let { wordList, deleteWord} = props;
+  let { deleteWordFromServer } = useContext(Context);
 
-
-
+  
 
 
   return (
     <>
-      {wordList.map((item, id) => (
-        <tr className="wordlist__item" key={id}>
+      {wordList.map((item) => (
+        <tr className="wordlist__item" key={item.id}>
           <td>{item.english}</td>
           <td>{item.transcription}</td>
           <td>{item.russian}</td>
@@ -32,7 +31,7 @@ export default function Tablerow(props) {
               alt="delete"
               className={st.wordlist__actionIcon}
               title="Delete"
-              onClick={() => deleteWord(id)}
+              onClick={() => {deleteWord(item)}}
             />
           </td>
         </tr>

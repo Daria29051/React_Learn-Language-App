@@ -3,6 +3,7 @@ import { useState } from "react";
 import Context from "../../context/Context";
 import { useContext } from 'react';
 import classNames from 'classnames';
+import uniqid from 'uniqid';
 import Tablerow from "../Tablerow/Tablerow";
 import edit from "../../assets/icons/edit.png";
 import del from "../../assets/icons/delete.png";
@@ -58,12 +59,18 @@ export default function Table() {
     setTranslationInputValue("");
   };
 
+  //создаем уникальный id
+  let uniqId = require('uniqid'); 
+ 
+
+
   let newWord = {
-    id: "",
-    english: wordInputValue,
-    transcription: transcriptionInputValue,
-    russian: translationInputValue,
-    tags: "",
+    "id": uniqId(),
+    "english": wordInputValue,
+    "transcription": transcriptionInputValue,
+    "russian": translationInputValue,
+    "tags": " ",
+    "tags_json":"[]"
   };
 
 
@@ -200,7 +207,7 @@ export default function Table() {
         </thead>
         <tbody>
           { wordList.length !== 0 ?
-          <Tablerow  wordList={wordList}/>  :
+          <Tablerow  wordList={wordList} setWordList={setWordList}/>  :
           <div className={st.wordlist_errorMessage}>{`Возникла проблема: ${errorApi.message}. Пожалуйста, попробуйте позднее.`}</div>
           }
         </tbody>

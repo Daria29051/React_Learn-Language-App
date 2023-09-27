@@ -1,28 +1,54 @@
-import React from 'react';
-import edit from '../../assets/icons/edit.png';
-import del from '../../assets/icons/delete.png';
-import st from './tablerow.module.scss';
-import { useContext } from 'react';
-import Context from '../../context/Context';
-
-
+import React, { useEffect } from "react";
+import edit from "../../assets/icons/edit.png";
+import del from "../../assets/icons/delete.png";
+import st from "./tablerow.module.scss";
+import { useContext } from "react";
+import Context from "../../context/Context";
 
 export default function Tablerow(props) {
+  const { setWordList, wordList } = props;
+  const { deleteWordFromServer } = useContext(Context);
 
-  const wordList = props;
-  
+  console.log(wordList);
+
+useEffect(()=> {
+  setWordList(wordList)
+}, 
+[wordList.length])
+
+  function deleteWord(id) {
+    let slicedWord = wordList.splice(id, 1);
+    console.log(slicedWord);
+    console.log(wordList);
+    setWordList(wordList);
+
+  }
+
+
   return (
     <>
-         {wordList.wordList.map((item, index) => (
-    <tr className='wordlist__item' key={index}>
-  <td>{item.english}</td>
-  <td>{item.transcription}</td>
-  <td>{item.russian}</td>
-  <td>
-    <img src={edit} alt="edit" className={st.wordlist__actionIcon} title="Edit"/>
-    <img src={del} alt="delete"className={st.wordlist__actionIcon} title="Delete"/></td>
-</tr>
-))}
+      {wordList.map((item, id) => (
+        <tr className="wordlist__item" key={id}>
+          <td>{item.english}</td>
+          <td>{item.transcription}</td>
+          <td>{item.russian}</td>
+          <td>
+            <img
+              src={edit}
+              alt="edit"
+              className={st.wordlist__actionIcon}
+              title="Edit"
+            />
+            <img
+              src={del}
+              alt="delete"
+              className={st.wordlist__actionIcon}
+              title="Delete"
+              onClick={() => deleteWord(id)}
+            />
+          </td>
+        </tr>
+      ))}
     </>
-  )
+  );
 }

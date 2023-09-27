@@ -48,16 +48,25 @@ function checkResponse(resp) {
   //добавление слов на сервер
   function addNewWordToServer(word) {
 
-    fetch("http://itgirlschool.justmakeit.ru/api/words"), {
+    fetch("http://itgirlschool.justmakeit.ru/api/words", {
       method: 'POST',
       body: JSON.stringify(word),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       },
-    }
+    })
   }
 
-  const value = {wordsApi, errorApi, isLoading, addNewWordToServer}
+function deleteWordFromServer(index) {
+  fetch("http://itgirlschool.justmakeit.ru/api/words", {
+    method: 'DELETE',
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  })
+}
+
+  const value = {wordsApi, errorApi, isLoading, addNewWordToServer , deleteWordFromServer}
 
   return (
     <Context.Provider value={value}>

@@ -18,18 +18,17 @@ function ContextProvider({children}) {
           if (Object.keys(response).length === 0) {
             throw new Error("Нет слов для изучения.");
           } else {
-            console.log(response);
-            return response;
+            console.log(response.json());
+            return response.json();
           }
         } else {
           throw new Error("Ошибка загрузки данных");
         }
       })
-
-      .then((response) => setWordsApi((wordsApi = response)))
-      .catch((error) => setErrorApi((errorApi = error)));
+      .then((response) => setWordsApi(response))
+      .catch((error) => setErrorApi(error));
   }, []);
-
+ 
   console.log(wordsApi);
   console.log(errorApi);
 

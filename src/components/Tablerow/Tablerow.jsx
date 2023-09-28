@@ -6,8 +6,7 @@ import { useContext } from "react";
 import Context from "../../context/Context";
 
 export default function Tablerow(props) {
-  let { wordList, deleteWord} = props;
-  let { deleteWordFromServer } = useContext(Context);
+  let { wordList, deleteWord, editWord, isEdit, setIsEdit} = props;
 
   
 
@@ -25,6 +24,7 @@ export default function Tablerow(props) {
               alt="edit"
               className={st.wordlist__actionIcon}
               title="Edit"
+              onClick={()=> {setIsEdit(!isEdit)}}
             />
             <img
               src={del}

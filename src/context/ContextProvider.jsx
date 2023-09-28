@@ -8,7 +8,7 @@ function ContextProvider({children}) {
   let [errorApi, setErrorApi] = useState([]);
   let [isLoading, setIsLoading] = useState(false);
 
-//получение слов с сервера
+//ПОЛУЧЕНИЕ СЛОВ С СЕРВЕРА
   useEffect(() => {
     setIsLoading(true);
     fetch("http://itgirlschool.justmakeit.ru/api/words")
@@ -29,7 +29,7 @@ function ContextProvider({children}) {
 
 
  
-  // console.log(wordsApi);
+
   // console.log(errorApi);
 
 
@@ -45,28 +45,32 @@ function checkResponse(resp) {
 }
 
 
-  //добавление слов на сервер
+  //ДОБАВЛЕНИЕ СЛОВ НА СЕРВЕР
   function addNewWordToServer(word) {
 
-    fetch("http://itgirlschool.justmakeit.ru/api/words", {
+    fetch(`http://itgirlschool.justmakeit.ru/api/words/add`, {
       method: 'POST',
-      body: JSON.stringify(word),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       },
+      body: JSON.stringify(word),
     })
   }
 
-function deleteWordFromServer(index) {
-  fetch("http://itgirlschool.justmakeit.ru/api/words", {
-    method: 'DELETE',
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8',
-    },
-  })
+//УДАЛЕНИЕ СЛОВ С СЕРВЕРА
+function deleteWordFromServer(id) {
+  fetch(`http://itgirlschool.justmakeit.ru/api/words/${id}/delete`, 
+  { method: 'POST'})
 }
 
-  const value = {wordsApi, errorApi, isLoading, addNewWordToServer , deleteWordFromServer}
+
+//РЕДАКТИРОВАНИЕ СЛОВА НА СЕРВЕРЕ
+function editWordOnServer(id) {
+  fetch (`http://itgirlschool.justmakeit.ru/api/words/${id}/update`,
+  {method: 'POST'})
+}
+
+  const value = {wordsApi, errorApi, isLoading, addNewWordToServer , deleteWordFromServer, editWordOnServer}
 
   return (
     <Context.Provider value={value}>

@@ -12,7 +12,7 @@ import cancel from "../../assets/icons/cancel.png";
 import st from "./table.module.scss";
 
 export default function Table() {
-  let {wordsApi , errorApi, addNewWordToServer} = useContext(Context);
+  let {wordsApi , errorApi, addNewWordToServer, deleteWordFromServer, editWordOnServer} = useContext(Context);
   let [visibility, setVisibility] = useState(false);
   let [pressed, setPressed] = useState(false);
   let [wordInputValue, setWordInputValue] = useState("");
@@ -21,6 +21,7 @@ export default function Table() {
   let [wordList, setWordList] = useState(wordsApi);
   let [errorList, setErrorList] = useState([]);
   let [successEnter , setSuccessEnter] = useState('');
+  let [isEdit, setIsEdit] = useState(false);
   let errors = [];
   let wordClassNames = classNames(st.wordlist__input, wordInputValue ==='' ? st.inputError : st.wordlist__input);
   let transcriptionClassNames = classNames(st.wordlist__input, transcriptionInputValue ==='' ? st.inputError : st.wordlist__input);
@@ -108,7 +109,7 @@ export default function Table() {
   //добавление нового слова в таблицу
   const addNewWord = () => {
     if (errors.length === 0) {
-      setWordList((prevState) => [newWord, ...prevState]);
+      setWordList((prevState)=> [newWord, ...prevState]);
       console.log(wordList);
       setWordInputValue("");
       setTranscriptionInputValue("");
@@ -118,6 +119,7 @@ export default function Table() {
     } else {
       setErrorList(errors);
       setSuccessEnter('');
+
     }
   };
 
@@ -133,13 +135,22 @@ export default function Table() {
 //  console.log(errorApi);
 
 //ФУНКЦИЯ УДАЛЕНИЯ СЛОВА
-
 const deleteWord = (item) => {
     setSuccessEnter('');
     setWordList(wordList.filter((word) => word.id !== item.id));
-    // console.log(wordList);
+    deleteWordFromServer(item.id);
   }
 
+
+  //ФУНКЦИЯ РЕДАКТИРОВАНИЯ СЛОВА
+  const editWord = (item) => {
+    editWordOnServer();
+    setWordInputValue(item.english);
+    setTranscriptionInputValue(item.transcription);
+    setTranslationInputValue(item.russian);
+
+
+  }
   useEffect(()=> {
     setWordList(wordList);
   },
@@ -163,6 +174,13 @@ const deleteWord = (item) => {
       <div className={st.wordlist__successEnter}>
         {successEnter}
       </div>
+      {(!isEdit) ? "" : <div className={st.wordlist__editPart}>
+        <input/>
+        <input/>
+        <input/>
+        <button>Save</button>
+        <button>Cancel</button>
+      </div>}
       <table className={st.wordlist__table}>
         <thead>
           <tr>
@@ -171,7 +189,7 @@ const deleteWord = (item) => {
             <th>Translation</th>
             <th>Options</th>
           </tr>
-          {visibility ? (
+          {visibility  ? (
             <tr className={st.wordlist__inputRow}>
               <td>
                 <input
@@ -222,7 +240,7 @@ const deleteWord = (item) => {
         </thead>
         <tbody>
           { wordList.length !== 0 ?
-          <Tablerow wordList={wordList} deleteWord={deleteWord} />  :
+          <Tablerow wordList={wordList} deleteWord={deleteWord} editWord = {editWord} isEdit={isEdit} setIsEdit={setIsEdit} />  :
           <div className={st.wordlist_errorMessage}>{`Возникла проблема: ${errorApi.message}. Пожалуйста, попробуйте позднее.`}</div>
           }
         </tbody>

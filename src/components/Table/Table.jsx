@@ -71,7 +71,7 @@ export default function Table() {
     "transcription": transcriptionInputValue,
     "russian": translationInputValue,
     "tags": " ",
-    "tags_json":"[]"
+    "tags_json":[]
   };
 
 

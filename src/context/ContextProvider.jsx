@@ -48,7 +48,7 @@ function checkResponse(resp) {
   //ДОБАВЛЕНИЕ СЛОВ НА СЕРВЕР
   function addNewWordToServer(word) {
 
-    fetch(`http://itgirlschool.justmakeit.ru/api/words/add`, {
+    fetch(`/api/words/add`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -59,7 +59,7 @@ function checkResponse(resp) {
 
 //УДАЛЕНИЕ СЛОВ С СЕРВЕРА
 function deleteWordFromServer(id) {
-  fetch(`http://itgirlschool.justmakeit.ru/api/words/${id}/delete`, 
+  fetch(`api/words/${id}/delete`, 
   { method: 'POST'})
 }
 

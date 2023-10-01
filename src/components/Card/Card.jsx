@@ -2,22 +2,12 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import st from "./card.module.scss";
 
-
 export default function Card(props) {
-  const { english, transcription, russian} = props.item;
+  const { english, transcription, russian } = props.item;
   console.log(props.item);
   const { learnt, setLearnt } = props;
   const [clicked, setClicked] = useState(false);
   const focusBtn = useRef();
-
- 
-
-  const tranlateAndCount = () => {
-    setClicked(!clicked);
-    setLearnt(learnt + 1);
-  };
-
-
 
   useEffect(() => {
     setClicked(false);
@@ -27,7 +17,12 @@ export default function Card(props) {
     !clicked && focusBtn.current.focus();
   }, [props.item]);
 
-  console.log(focusBtn);
+  const tranlateAndCount = () => {
+    setClicked(!clicked);
+    setLearnt(learnt + 1);
+  };
+
+  // console.log(focusBtn);
 
   return (
     <div className={st.flashcard}>

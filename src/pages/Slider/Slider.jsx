@@ -10,9 +10,7 @@ export default function Slider() {
   const { wordsApi } = useContext(Context);
   const [sliderWordList, setSliderWordList] = useState(wordsApi);
   const [learnt, setLearnt] = useState(0);
- console.log(sliderWordList);
-
-
+  //  console.log(sliderWordList);
 
   let cardsIndexArray = []; //массив с индексами карточек
   let cardIndex; // индекс карточки

@@ -8,14 +8,18 @@ import st from "./slider.module.scss";
 
 export default function Slider() {
   const { wordsApi } = useContext(Context);
+  const [sliderWordList, setSliderWordList] = useState(wordsApi);
   const [learnt, setLearnt] = useState(0);
+ console.log(sliderWordList);
+
+
 
   let cardsIndexArray = []; //массив с индексами карточек
   let cardIndex; // индекс карточки
 
-  if (wordsApi.length !== 0) {
-    for (let card of wordsApi) {
-      cardIndex = wordsApi.indexOf(card);
+  if (sliderWordList.length !== 0) {
+    for (let card of sliderWordList) {
+      cardIndex = sliderWordList.indexOf(card);
       cardsIndexArray.push(cardIndex);
     }
   }
@@ -54,11 +58,12 @@ export default function Slider() {
           <button className={st.slider__button} onClick={showPrevCard}>
             <span className={st.slider__arrow}>&lt;</span>
           </button>{" "}
-          {wordsApi.length !== 0 ? (
+          {sliderWordList.length !== 0 ? (
             <Card
-              item={wordsApi[selectedIndex]}
+              item={sliderWordList[selectedIndex]}
               learnt={learnt}
               setLearnt={setLearnt}
+              setSliderWordList={setSliderWordList}
             ></Card>
           ) : (
             <EmptyCard />
@@ -67,14 +72,14 @@ export default function Slider() {
             <span className={st.slider__arrow}>&gt;</span>
           </button>
         </div>
-        {wordsApi.length !== 0 ? (
+        {sliderWordList.length !== 0 ? (
           <div className={st.slider__counter}>
             {selectedIndex + 1} / {cardsIndexArray.length}
           </div>
         ) : (
           <div className={st.slider__counter}> 0 / 0</div>
         )}
-        {wordsApi.length !== 0 ? (
+        {sliderWordList.length !== 0 ? (
           <div className={st.slider__learnt}>
             Изучено слов: <strong>{learnt}</strong>
           </div>

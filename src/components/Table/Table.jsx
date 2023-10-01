@@ -5,8 +5,6 @@ import { useContext } from "react";
 import classNames from "classnames";
 import uniqid from "uniqid";
 import Tablerow from "../Tablerow/Tablerow";
-import edit from "../../assets/icons/edit.png";
-import del from "../../assets/icons/delete.png";
 import save from "../../assets/icons/save.png";
 import cancel from "../../assets/icons/cancel.png";
 import st from "./table.module.scss";
@@ -17,22 +15,29 @@ export default function Table() {
     errorApi,
     addNewWordToServer,
     deleteWordFromServer,
-    editWordOnServer,
     updateWordOnServer,
   } = useContext(Context);
-  let [visibility, setVisibility] = useState(false);
-  let [pressed, setPressed] = useState(false);
-  let [wordInputValue, setWordInputValue] = useState("");
-  let [transcriptionInputValue, setTranscriptionInputValue] = useState("");
-  let [translationInputValue, setTranslationInputValue] = useState("");
-  let [wordList, setWordList] = useState(wordsApi);
-  let [errorList, setErrorList] = useState([]);
-  let [successEnter, setSuccessEnter] = useState("");
-  let [isEdit, setIsEdit] = useState(false); //режим редактирования
-  let [editWordInput, setEditWordInput] = useState("");
-  let [editTranscriptionInput, setEditTranscriptionInput] = useState("");
-  let [editTranslationInput, setEditTranslationInput] = useState("");
-  let errors = [];
+  const [visibility, setVisibility] = useState(false); //скрыть/показать добавление нового слова
+  const [pressed, setPressed] = useState(false); //study words / add word change mode
+  const [wordInputValue, setWordInputValue] = useState("");
+  const [transcriptionInputValue, setTranscriptionInputValue] = useState("");
+  const [translationInputValue, setTranslationInputValue] = useState("");
+  const [wordList, setWordList] = useState(wordsApi);
+  const [errorList, setErrorList] = useState([]); //ошибки ввода нового слова
+  const [editErrorList, setEditErrorList] = useState([]);
+  const [successEnter, setSuccessEnter] = useState("");
+  const [isEdit, setIsEdit] = useState(false); //скрыть/показать  режим редактирования слова
+  const [editWordInput, setEditWordInput] = useState("");
+  const [editTranscriptionInput, setEditTranscriptionInput] = useState("");
+  const [editTranslationInput, setEditTranslationInput] = useState("");
+  const [wordItem, setWordItem] = useState(""); //wordItem из Tablerow.jsx
+  //рег выражения для проверки правильности заполнения полей
+  const testEnglishLetters = /^[a-z]+$/i;
+  const testTranscription = /^\[[a-z:\.ˈΛɑəeɛɜɔоɪʊæŋʒʤʃθðː\s]+\]/;
+  const testRussianLetters = /^[а-я]+$/i;
+  let errors = []; //массив вывода ошибок заполнения полей для нового слова
+  let editErrors = [];//массив вывода ошибок заполнения полей для updated слова
+
   let wordClassNames = classNames(
     st.wordlist__input,
     wordInputValue === "" ? st.inputError : st.wordlist__input
@@ -46,26 +51,30 @@ export default function Table() {
     translationInputValue === "" ? st.inputError : st.wordlist__input
   );
 
+  // console.log(wordsApi);
+  // console.log(wordList);
+  // console.log(errorApi);
+
   useEffect(() => {
     setWordList(wordsApi);
   }, [wordsApi]);
 
-  // console.log(wordsApi);
-  // console.log(wordList);
-  // console.log(errorApi);
+  //скрываем вывод ошибок и очищаем поля ввода при клике на кнопку Study words/Add word
+  useEffect(() => {
+    setErrorList([]);
+    setSuccessEnter("");
+    clearFields();
+  }, [pressed]);
+
+  useEffect(() => {
+    setWordList(wordList);
+  }, [wordList.length]);
 
   //смена кнопки Study words
   const handleClick = () => {
     setVisibility(!visibility);
     setPressed(!pressed);
   };
-
-  //скрываем вывод ошибок и уведомление о добавлении слова, и очищаем поля ввода при клике на кнопку Study words/Add word
-  useEffect(() => {
-    setErrorList([]);
-    setSuccessEnter("");
-    clearFields();
-  }, [pressed]);
 
   //очистка полей инпутов
   const clearFields = () => {
@@ -74,12 +83,10 @@ export default function Table() {
     setTranslationInputValue("");
   };
 
-  //ПОЛУЧИТЬ ITEM ИЗ TABLEROW
-  const [wordItem, setWordItem] = useState('');
-
-  const getItem =(item)=> {
-    setWordItem(item)
-   }
+  //получпение wordItem из Tablerow.jsx
+  const getItem = (item) => {
+    setWordItem(item);
+  };
 
   //создаем уникальный id
   let uniqId = require("uniqid");
@@ -96,7 +103,7 @@ export default function Table() {
 
   //updated слово
   let updatedWord = {
-    id : wordItem.id,
+    id: wordItem.id,
     english: editWordInput,
     transcription: editTranscriptionInput,
     russian: editTranslationInput,
@@ -106,11 +113,8 @@ export default function Table() {
 
   //проверка правильности заполнения инпутов
   const testInputs = () => {
-    errors = [];
-    const testEnglishLetters = /^[a-z]+$/i;
-    const testTranscription = /^\[[a-z:\.ˈΛɑəeɛɜɔоɪʊæŋʒʤʃθðː\s]+\]/;
-    const testRussianLetters = /^[а-я]+$/i;
 
+    if (!isEdit) {
     if (
       wordInputValue === "" ||
       transcriptionInputValue === "" ||
@@ -131,8 +135,35 @@ export default function Table() {
       errors.push("Используйте русские буквы для ввода перевода.");
     }
 
-    console.log(errors);
+  }
+
+    if (isEdit) {
+
+      if (
+        editWordInput === "" ||
+        editTranscriptionInput === "" ||
+        editTranslationInput === ""
+      ) {
+        editErrors.push("Заполните все поля ввода.");
+      }
+
+      if (!testEnglishLetters.test(editWordInput)) {
+        editErrors.push("Используйте английские буквы для ввода слова.");  
+      }
+
+      if (!testTranscription.test(editTranscriptionInput)) {
+        editErrors.push("Проверьте правильность ввода транскрипции.");
+      }
+
+      if (!testRussianLetters.test(editTranslationInput)) {
+        editErrors.push("Используйте русские буквы для ввода перевода.");
+      }
+
+    }
+    // console.log(errors);
+    // console.log(editErrors);
     setErrorList(errors);
+    setEditErrorList(editErrors);
   };
 
   //добавление нового слова в таблицу
@@ -151,15 +182,15 @@ export default function Table() {
     }
   };
 
-  //ОБЩАЯ ФУНКЦИЯ ДОБАВЛЕНИЯ СЛОВА(ПРОВЕРКА ИНПУТОВ И ДОБАВЛЕНИЕ В СЛУЧАЕ КОРРЕКТНОГО ЗАПОЛНЕНИЯ)
+  //ОБЩАЯ ФУНКЦИЯ ДОБАВЛЕНИЯ СЛОВА
   const testInputsAndAddWord = () => {
     testInputs();
     addNewWord();
-    addNewWordToServer(newWord); //передаем новое слово на сервер
+    errors.length === 0 && addNewWordToServer(newWord);
   };
 
   //  console.log(errorApi);
-  console.log(wordList);
+  // console.log(wordList);
 
   //ФУНКЦИЯ УДАЛЕНИЯ СЛОВА
   const deleteWord = (item) => {
@@ -170,22 +201,23 @@ export default function Table() {
 
   //ФУНКЦИЯ РЕДАКТИРОВАНИЯ СЛОВА
   const updateWord = () => {
+    testInputs();
+     if (editErrors.length === 0) {
     updateWordOnServer(wordItem.id, updatedWord);
-    console.log(wordItem);
-    console.log(updatedWord);
+    // console.log(wordItem);
+    // console.log(updatedWord);
     wordItem.english = editWordInput;
     wordItem.transcription = editTranscriptionInput;
     wordItem.russian = editTranslationInput;
+    setIsEdit(false);
+    setSuccessEnter('Слово успешно обновлено!')
+  }
   };
 
   //ФУНКЦИЯ ЗАКРЫТИЯ РЕЖИМА РЕДАКТИРОВАНИЯ
   const stopEditing = () => {
     setIsEdit(false);
   };
-
-  useEffect(() => {
-    setWordList(wordList);
-  }, [wordList.length]);
 
   return (
     <div className={st.wordlist}>
@@ -199,6 +231,15 @@ export default function Table() {
         {errorList.length !== 0
           ? errorList.map((item, index) => (
               <div className={st.wordlist__errorListItem} key={index}>
+                {item}
+              </div>
+            ))
+          : ""}
+      </div>
+      <div className={st.wordlist__editErrorList}>
+        {editErrorList.length !== 0
+          ? editErrorList.map((item, index) => (
+              <div className={st.wordlist__editErrorListItem} key={index}>
                 {item}
               </div>
             ))
@@ -224,7 +265,9 @@ export default function Table() {
             value={editTranslationInput}
             onChange={(e) => setEditTranslationInput(e.target.value)}
           />
-          <button className={st.editor__saveButton} onClick={updateWord}>Save</button>
+          <button className={st.editor__saveButton} onClick={updateWord}>
+            Save
+          </button>
           <button className={st.editor__cancelButton} onClick={stopEditing}>
             Cancel
           </button>
@@ -292,7 +335,6 @@ export default function Table() {
             <Tablerow
               wordList={wordList}
               deleteWord={deleteWord}
-              updateWord={updateWord}
               isEdit={isEdit}
               setIsEdit={setIsEdit}
               setEditWordInput={setEditWordInput}

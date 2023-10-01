@@ -2,17 +2,17 @@ import { useEffect, useState } from "react";
 import React from "react";
 import Context from "./Context";
 
+function ContextProvider({ children }) {
+  const [wordsApi, setWordsApi] = useState([]); // массив слов
+  const [errorApi, setErrorApi] = useState([]); //массив ошибок
+  const [isLoading, setIsLoading] = useState(false); //индикатор загрузки
+  const baseURL = "/api/words";
 
-function ContextProvider({children}) {
-  let [wordsApi, setWordsApi] = useState([]);
-  let [errorApi, setErrorApi] = useState([]);
-  let [isLoading, setIsLoading] = useState(false);
-
-//ПОЛУЧЕНИЕ СЛОВ С СЕРВЕРА
+  //ПОЛУЧЕНИЕ СЛОВ С СЕРВЕРА
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://itgirlschool.justmakeit.ru/api/words")
-    .then((response) => {
+    fetch(baseURL)
+      .then((response) => {
         if (response.ok) {
           setIsLoading(false);
           // console.log(response);
@@ -22,66 +22,61 @@ function ContextProvider({children}) {
         }
       })
       .then((response) => response.json())
-      .then((response)=> checkResponse(response))
+      .then((response) => checkResponse(response))
       .then((response) => setWordsApi(response))
       .catch((error) => setErrorApi(error));
   }, []);
 
-
- 
-
   // console.log(errorApi);
+  // console.log(wordsApi);
 
-
-//функция проверки на пустой ответ от сервера
-function checkResponse(resp) {
-  if (resp.length === 0) {
-    console.log('Object is empty');
-    throw new Error("Нет слов для изучения.");  
+  //функция проверки на пустой ответ от сервера
+  function checkResponse(resp) {
+    if (resp.length === 0) {
+      console.log("Object is empty");
+      throw new Error("Нет слов для изучения.");
+    } else {
+      return resp;
+    }
   }
-  else {
-        return resp;
-      }
-}
-
 
   //ДОБАВЛЕНИЕ СЛОВ НА СЕРВЕР
   function addNewWordToServer(word) {
-
-    fetch(`/api/words/add`, {
-      method: 'POST',
+    fetch(`${baseURL}/add`, {
+      method: "POST",
       headers: {
-        'Content-type': 'application/json; charset=UTF-8',
+        "Content-type": "application/json; charset=UTF-8",
       },
       body: JSON.stringify(word),
-    })
+    });
   }
 
-//УДАЛЕНИЕ СЛОВА С СЕРВЕРА
-function deleteWordFromServer(id) {
-  fetch(`api/words/${id}/delete`, 
-  { method: 'POST'})
-}
+  //УДАЛЕНИЕ СЛОВА С СЕРВЕРА
+  function deleteWordFromServer(id) {
+    fetch(`${baseURL}/${id}/delete`, { method: "POST" });
+  }
 
-//РЕДАКТИРОВАНИЕ СЛОВА НА СЕРВЕРЕ
-function updateWordOnServer(id, word) {
-  fetch(`/api/words/${id}/update`, {
-    method: 'POST',
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8',
-    },
-    body: JSON.stringify(word),
-  })
-}
+  //РЕДАКТИРОВАНИЕ СЛОВА НА СЕРВЕРЕ
+  function updateWordOnServer(id, word) {
+    fetch(`${baseURL}/${id}/update`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify(word),
+    });
+  }
 
+  const value = {
+    wordsApi,
+    errorApi,
+    isLoading,
+    addNewWordToServer,
+    deleteWordFromServer,
+    updateWordOnServer,
+  };
 
-  const value = {wordsApi, errorApi, isLoading, addNewWordToServer , deleteWordFromServer, updateWordOnServer}
-
-  return (
-    <Context.Provider value={value}>
-      {children}
-    </Context.Provider>
-  );
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
 export default ContextProvider;

@@ -2,17 +2,15 @@ import React, { useEffect, useState } from "react";
 import edit from "../../assets/icons/edit.png";
 import del from "../../assets/icons/delete.png";
 import st from "./tablerow.module.scss";
-import { useContext } from "react";
-import Context from "../../context/Context";
+
 
 export default function Tablerow(props) {
-  let {updateWordOnServer} = useContext(Context);
-  let { wordList, deleteWord,  isEdit, setIsEdit,  setEditWordInput, setEditTranscriptionInput, setEditTranslationInput, getItem} = props;
+  const { wordList, deleteWord,  isEdit, setIsEdit,  setEditWordInput, setEditTranscriptionInput, setEditTranslationInput, getItem} = props;
 
 //ФУНКЦИЯ НАЧАЛА РЕДАКТИРОВАНИЯ
   const startEditing = (item)=> {
     getItem(item);
-    console.log(item);
+    // console.log(item);
     setIsEdit(!isEdit);
     setEditWordInput(item.english);
     setEditTranscriptionInput(item.transcription);

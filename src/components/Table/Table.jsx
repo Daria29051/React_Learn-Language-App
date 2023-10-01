@@ -33,7 +33,7 @@ export default function Table() {
   const [wordItem, setWordItem] = useState(""); //wordItem из Tablerow.jsx
   //рег выражения для проверки правильности заполнения полей
   const testEnglishLetters = /^[a-z]+$/i;
-  const testTranscription = /^\[[a-z:\.ˈΛɑəeɛɜɔоɪʊæŋʒʤʃθðː\s]+\]/;
+  const testTranscription = /^\[[a-z:\.ˈΛɑɒəeɛɜɔоɪʊæŋʒʤʃθðː\s]+\]/;
   const testRussianLetters = /^[а-я]+$/i;
   let errors = []; //массив вывода ошибок заполнения полей для нового слова
   let editErrors = [];//массив вывода ошибок заполнения полей для updated слова
@@ -342,6 +342,7 @@ export default function Table() {
               setEditTranslationInput={setEditTranslationInput}
               updatedWord={updatedWord}
               getItem={getItem}
+              setSuccessEnter={setSuccessEnter}
             />
           ) : (
             <div

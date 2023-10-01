@@ -78,7 +78,8 @@
   cursor: pointer;
 }
 
-.wordlist__errorList {
+//вывод ошибок заполнения полей
+.wordlist__errorList, .wordlist__editErrorList {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -86,10 +87,11 @@
   color: red;
 }
 
-.wordlist__errorListItem {
+.wordlist__errorListItem, .wordlist__editErrorListItem {
   margin: 0;
   padding: 0;
 }
+
 
 .wordlist__successEnter {
   display: flex;

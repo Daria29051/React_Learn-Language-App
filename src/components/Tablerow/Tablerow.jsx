@@ -5,10 +5,11 @@ import st from "./tablerow.module.scss";
 
 
 export default function Tablerow(props) {
-  const { wordList, deleteWord,  isEdit, setIsEdit,  setEditWordInput, setEditTranscriptionInput, setEditTranslationInput, getItem} = props;
+  const { wordList, deleteWord,  isEdit, setIsEdit,  setEditWordInput, setEditTranscriptionInput, setEditTranslationInput, getItem, setSuccessEnter} = props;
 
 //ФУНКЦИЯ НАЧАЛА РЕДАКТИРОВАНИЯ
   const startEditing = (item)=> {
+    setSuccessEnter('');
     getItem(item);
     // console.log(item);
     setIsEdit(!isEdit);

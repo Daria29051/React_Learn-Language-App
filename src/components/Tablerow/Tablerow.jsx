@@ -6,10 +6,19 @@ import { useContext } from "react";
 import Context from "../../context/Context";
 
 export default function Tablerow(props) {
-  let { wordList, deleteWord, editWord, isEdit, setIsEdit} = props;
+  let {updateWordOnServer} = useContext(Context);
+  let { wordList, deleteWord,  isEdit, setIsEdit,  setEditWordInput, setEditTranscriptionInput, setEditTranslationInput, getItem} = props;
 
-  
-
+//ФУНКЦИЯ НАЧАЛА РЕДАКТИРОВАНИЯ
+  const startEditing = (item)=> {
+    getItem(item);
+    console.log(item);
+    setIsEdit(!isEdit);
+    setEditWordInput(item.english);
+    setEditTranscriptionInput(item.transcription);
+    setEditTranslationInput(item.russian);
+ 
+  }
 
   return (
     <>
@@ -24,7 +33,7 @@ export default function Tablerow(props) {
               alt="edit"
               className={st.wordlist__actionIcon}
               title="Edit"
-              onClick={()=> {setIsEdit(!isEdit)}}
+              onClick={()=>startEditing(item)}
             />
             <img
               src={del}

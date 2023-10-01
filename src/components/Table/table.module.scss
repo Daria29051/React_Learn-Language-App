@@ -117,3 +117,14 @@
   justify-content: center;
   align-items: center;
 }
+
+.editor__saveButton, .editor__cancelButton {
+ cursor: pointer;
+ background-color: $bg-color1;
+ color: white;
+border: 1px solid black;
+
+ &:hover {
+  background-color: $bg-color4;
+ }
+}

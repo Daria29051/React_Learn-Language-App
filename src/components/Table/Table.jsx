@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import Context from "../../context/Context";
-import { useContext } from 'react';
-import classNames from 'classnames';
-import uniqid from 'uniqid';
+import { useContext } from "react";
+import classNames from "classnames";
+import uniqid from "uniqid";
 import Tablerow from "../Tablerow/Tablerow";
 import edit from "../../assets/icons/edit.png";
 import del from "../../assets/icons/delete.png";
@@ -12,7 +12,14 @@ import cancel from "../../assets/icons/cancel.png";
 import st from "./table.module.scss";
 
 export default function Table() {
-  let {wordsApi , errorApi, addNewWordToServer, deleteWordFromServer, editWordOnServer} = useContext(Context);
+  let {
+    wordsApi,
+    errorApi,
+    addNewWordToServer,
+    deleteWordFromServer,
+    editWordOnServer,
+    updateWordOnServer,
+  } = useContext(Context);
   let [visibility, setVisibility] = useState(false);
   let [pressed, setPressed] = useState(false);
   let [wordInputValue, setWordInputValue] = useState("");
@@ -20,24 +27,32 @@ export default function Table() {
   let [translationInputValue, setTranslationInputValue] = useState("");
   let [wordList, setWordList] = useState(wordsApi);
   let [errorList, setErrorList] = useState([]);
-  let [successEnter , setSuccessEnter] = useState('');
-  let [isEdit, setIsEdit] = useState(false);
+  let [successEnter, setSuccessEnter] = useState("");
+  let [isEdit, setIsEdit] = useState(false); //режим редактирования
+  let [editWordInput, setEditWordInput] = useState("");
+  let [editTranscriptionInput, setEditTranscriptionInput] = useState("");
+  let [editTranslationInput, setEditTranslationInput] = useState("");
   let errors = [];
-  let wordClassNames = classNames(st.wordlist__input, wordInputValue ==='' ? st.inputError : st.wordlist__input);
-  let transcriptionClassNames = classNames(st.wordlist__input, transcriptionInputValue ==='' ? st.inputError : st.wordlist__input);
-  let translationClassNames = classNames(st.wordlist__input, translationInputValue ==='' ? st.inputError : st.wordlist__input);
+  let wordClassNames = classNames(
+    st.wordlist__input,
+    wordInputValue === "" ? st.inputError : st.wordlist__input
+  );
+  let transcriptionClassNames = classNames(
+    st.wordlist__input,
+    transcriptionInputValue === "" ? st.inputError : st.wordlist__input
+  );
+  let translationClassNames = classNames(
+    st.wordlist__input,
+    translationInputValue === "" ? st.inputError : st.wordlist__input
+  );
 
-
-  useEffect(()=>{
+  useEffect(() => {
     setWordList(wordsApi);
   }, [wordsApi]);
-
-
 
   // console.log(wordsApi);
   // console.log(wordList);
   // console.log(errorApi);
-  
 
   //смена кнопки Study words
   const handleClick = () => {
@@ -46,12 +61,11 @@ export default function Table() {
   };
 
   //скрываем вывод ошибок и уведомление о добавлении слова, и очищаем поля ввода при клике на кнопку Study words/Add word
-  useEffect(()=> {
+  useEffect(() => {
     setErrorList([]);
-    setSuccessEnter('');
+    setSuccessEnter("");
     clearFields();
-  }
-  , [pressed]);
+  }, [pressed]);
 
   //очистка полей инпутов
   const clearFields = () => {
@@ -60,20 +74,35 @@ export default function Table() {
     setTranslationInputValue("");
   };
 
+  //ПОЛУЧИТЬ ITEM ИЗ TABLEROW
+  const [wordItem, setWordItem] = useState('');
+
+  const getItem =(item)=> {
+    setWordItem(item)
+   }
+
   //создаем уникальный id
-  let uniqId = require('uniqid'); 
- 
+  let uniqId = require("uniqid");
 
-
+  //новое слово для добавления
   let newWord = {
-    "id": uniqId(),
-    "english": wordInputValue,
-    "transcription": transcriptionInputValue,
-    "russian": translationInputValue,
-    "tags": " ",
-    "tags_json":[]
+    id: uniqId(),
+    english: wordInputValue,
+    transcription: transcriptionInputValue,
+    russian: translationInputValue,
+    tags: " ",
+    tags_json: [],
   };
 
+  //updated слово
+  let updatedWord = {
+    id : wordItem.id,
+    english: editWordInput,
+    transcription: editTranscriptionInput,
+    russian: editTranslationInput,
+    tags: " ",
+    tags_json: [],
+  };
 
   //проверка правильности заполнения инпутов
   const testInputs = () => {
@@ -109,21 +138,18 @@ export default function Table() {
   //добавление нового слова в таблицу
   const addNewWord = () => {
     if (errors.length === 0) {
-      setWordList((prevState)=> [newWord, ...prevState]);
+      setWordList((prevState) => [newWord, ...prevState]);
       console.log(wordList);
       setWordInputValue("");
       setTranscriptionInputValue("");
       setTranslationInputValue("");
       setErrorList([]);
-      setSuccessEnter('Новое слово успешно добавлено!');
+      setSuccessEnter("Новое слово успешно добавлено!");
     } else {
       setErrorList(errors);
-      setSuccessEnter('');
-
+      setSuccessEnter("");
     }
   };
-
-
 
   //ОБЩАЯ ФУНКЦИЯ ДОБАВЛЕНИЯ СЛОВА(ПРОВЕРКА ИНПУТОВ И ДОБАВЛЕНИЕ В СЛУЧАЕ КОРРЕКТНОГО ЗАПОЛНЕНИЯ)
   const testInputsAndAddWord = () => {
@@ -132,29 +158,34 @@ export default function Table() {
     addNewWordToServer(newWord); //передаем новое слово на сервер
   };
 
-//  console.log(errorApi);
+  //  console.log(errorApi);
+  console.log(wordList);
 
-//ФУНКЦИЯ УДАЛЕНИЯ СЛОВА
-const deleteWord = (item) => {
-    setSuccessEnter('');
+  //ФУНКЦИЯ УДАЛЕНИЯ СЛОВА
+  const deleteWord = (item) => {
+    setSuccessEnter("");
     setWordList(wordList.filter((word) => word.id !== item.id));
     deleteWordFromServer(item.id);
-  }
-
+  };
 
   //ФУНКЦИЯ РЕДАКТИРОВАНИЯ СЛОВА
-  const editWord = (item) => {
-    editWordOnServer();
-    setWordInputValue(item.english);
-    setTranscriptionInputValue(item.transcription);
-    setTranslationInputValue(item.russian);
+  const updateWord = () => {
+    updateWordOnServer(wordItem.id, updatedWord);
+    console.log(wordItem);
+    console.log(updatedWord);
+    wordItem.english = editWordInput;
+    wordItem.transcription = editTranscriptionInput;
+    wordItem.russian = editTranslationInput;
+  };
 
+  //ФУНКЦИЯ ЗАКРЫТИЯ РЕЖИМА РЕДАКТИРОВАНИЯ
+  const stopEditing = () => {
+    setIsEdit(false);
+  };
 
-  }
-  useEffect(()=> {
+  useEffect(() => {
     setWordList(wordList);
-  },
-  [wordList.length])
+  }, [wordList.length]);
 
   return (
     <div className={st.wordlist}>
@@ -167,20 +198,38 @@ const deleteWord = (item) => {
       <div className={st.wordlist__errorList}>
         {errorList.length !== 0
           ? errorList.map((item, index) => (
-              <div className={st.wordlist__errorListItem} key={index}>{item}</div>
+              <div className={st.wordlist__errorListItem} key={index}>
+                {item}
+              </div>
             ))
           : ""}
       </div>
-      <div className={st.wordlist__successEnter}>
-        {successEnter}
-      </div>
-      {(!isEdit) ? "" : <div className={st.wordlist__editPart}>
-        <input/>
-        <input/>
-        <input/>
-        <button>Save</button>
-        <button>Cancel</button>
-      </div>}
+      <div className={st.wordlist__successEnter}>{successEnter}</div>
+      {!isEdit ? (
+        ""
+      ) : (
+        <div className={st.wordlist__editPart}>
+          <input
+            type="text"
+            value={editWordInput}
+            onChange={(e) => setEditWordInput(e.target.value)}
+          />
+          <input
+            type="text"
+            value={editTranscriptionInput}
+            onChange={(e) => setEditTranscriptionInput(e.target.value)}
+          />
+          <input
+            type="text"
+            value={editTranslationInput}
+            onChange={(e) => setEditTranslationInput(e.target.value)}
+          />
+          <button className={st.editor__saveButton} onClick={updateWord}>Save</button>
+          <button className={st.editor__cancelButton} onClick={stopEditing}>
+            Cancel
+          </button>
+        </div>
+      )}
       <table className={st.wordlist__table}>
         <thead>
           <tr>
@@ -189,7 +238,7 @@ const deleteWord = (item) => {
             <th>Translation</th>
             <th>Options</th>
           </tr>
-          {visibility  ? (
+          {visibility ? (
             <tr className={st.wordlist__inputRow}>
               <td>
                 <input
@@ -239,10 +288,24 @@ const deleteWord = (item) => {
           )}
         </thead>
         <tbody>
-          { wordList.length !== 0 ?
-          <Tablerow wordList={wordList} deleteWord={deleteWord} editWord = {editWord} isEdit={isEdit} setIsEdit={setIsEdit} />  :
-          <div className={st.wordlist_errorMessage}>{`Возникла проблема: ${errorApi.message}. Пожалуйста, попробуйте позднее.`}</div>
-          }
+          {wordList.length !== 0 ? (
+            <Tablerow
+              wordList={wordList}
+              deleteWord={deleteWord}
+              updateWord={updateWord}
+              isEdit={isEdit}
+              setIsEdit={setIsEdit}
+              setEditWordInput={setEditWordInput}
+              setEditTranscriptionInput={setEditTranscriptionInput}
+              setEditTranslationInput={setEditTranslationInput}
+              updatedWord={updatedWord}
+              getItem={getItem}
+            />
+          ) : (
+            <div
+              className={st.wordlist_errorMessage}
+            >{`Возникла проблема: ${errorApi.message}. Пожалуйста, попробуйте позднее.`}</div>
+          )}
         </tbody>
       </table>
     </div>

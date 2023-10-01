@@ -57,20 +57,25 @@ function checkResponse(resp) {
     })
   }
 
-//УДАЛЕНИЕ СЛОВ С СЕРВЕРА
+//УДАЛЕНИЕ СЛОВА С СЕРВЕРА
 function deleteWordFromServer(id) {
   fetch(`api/words/${id}/delete`, 
   { method: 'POST'})
 }
 
-
 //РЕДАКТИРОВАНИЕ СЛОВА НА СЕРВЕРЕ
-function editWordOnServer(id) {
-  fetch (`http://itgirlschool.justmakeit.ru/api/words/${id}/update`,
-  {method: 'POST'})
+function updateWordOnServer(id, word) {
+  fetch(`/api/words/${id}/update`, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+    body: JSON.stringify(word),
+  })
 }
 
-  const value = {wordsApi, errorApi, isLoading, addNewWordToServer , deleteWordFromServer, editWordOnServer}
+
+  const value = {wordsApi, errorApi, isLoading, addNewWordToServer , deleteWordFromServer, updateWordOnServer}
 
   return (
     <Context.Provider value={value}>

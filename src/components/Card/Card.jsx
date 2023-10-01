@@ -4,6 +4,7 @@ import st from "./card.module.scss";
 
 export default function Card(props) {
   const { english, transcription, russian } = props.item;
+  console.log(props.item.english);
   const { learnt, setLearnt } = props;
   const [clicked, setClicked] = useState(false);
   const focusBtn = useRef();

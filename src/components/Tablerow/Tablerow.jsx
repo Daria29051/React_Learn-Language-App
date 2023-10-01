@@ -9,7 +9,7 @@ export default function Tablerow(props) {
 
 //ФУНКЦИЯ НАЧАЛА РЕДАКТИРОВАНИЯ
   const startEditing = (item)=> {
-    setSuccessEnter('');
+    setSuccessEnter('');  
     getItem(item);
     // console.log(item);
     setIsEdit(!isEdit);

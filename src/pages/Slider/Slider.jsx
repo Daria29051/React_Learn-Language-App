@@ -6,7 +6,7 @@ import Card from "../../components/Card/Card";
 import EmptyCard from "../../components/EmptyCard/EmptyCard";
 import st from "./slider.module.scss";
 
-export default function Slider(props) {
+export default function Slider() {
   const { wordsApi } = useContext(Context);
   const [learnt, setLearnt] = useState(0);
 

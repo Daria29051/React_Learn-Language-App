@@ -11,13 +11,11 @@ export default function Slider() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [learnt, setLearnt] = useState(0);
 
-
-  useEffect(()=> {
-   setSliderWordList(wordsApi) 
-  }, [wordsApi])
+  useEffect(() => {
+    setSliderWordList(wordsApi);
+  }, [wordsApi]);
 
   //  console.log(sliderWordList);
-
 
   const showNextCard = () => {
     if (selectedIndex < sliderWordList.length - 1) {
@@ -27,7 +25,6 @@ export default function Slider() {
       setSelectedIndex(0);
     }
   };
-
 
   const showPrevCard = () => {
     if (selectedIndex > 0) {
@@ -61,7 +58,9 @@ export default function Slider() {
           </button>
         </div>
         <div className={st.slider__counter}>
-          {sliderWordList.length !==0 ? `${selectedIndex +1} / ${sliderWordList.length}` : '0/0'}
+          {sliderWordList.length !== 0
+            ? `${selectedIndex + 1} / ${sliderWordList.length}`
+            : "0/0"}
         </div>
         <div className={st.slider__leart}>
           Изучено слов: <strong>{learnt}</strong>

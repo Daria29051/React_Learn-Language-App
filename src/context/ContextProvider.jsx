@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import React from "react";
 import Context from "./Context";
 
 function ContextProvider({ children }) {

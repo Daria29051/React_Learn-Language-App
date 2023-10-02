@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import edit from "../../assets/icons/edit.png";
 import del from "../../assets/icons/delete.png";
 import st from "./tablerow.module.scss";

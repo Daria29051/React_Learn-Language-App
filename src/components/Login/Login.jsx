@@ -1,4 +1,3 @@
-import React from 'react';
 import st from './login.module.scss';
 
 function Login() {

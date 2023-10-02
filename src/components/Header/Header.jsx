@@ -1,5 +1,4 @@
 
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Customlink from '../CustomLink/CustomLink';
 import logo from '../../assets/icons/logo.png';

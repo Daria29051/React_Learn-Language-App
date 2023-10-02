@@ -1,4 +1,3 @@
-import React from 'react';
 import st from "./emptycard.module.scss";
 
 

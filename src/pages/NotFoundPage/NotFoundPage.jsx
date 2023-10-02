@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import gif from "../../assets/gif/errorGif.gif";
 import st from "./notfound.module.scss";

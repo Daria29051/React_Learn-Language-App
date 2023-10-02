@@ -1,4 +1,3 @@
-import React from "react";
 import flashcards from "../../data/flashcard.json";
 import st from "./flashcard.module.scss";
 

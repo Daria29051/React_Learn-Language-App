@@ -5,6 +5,7 @@ function ContextProvider({ children }) {
   const [wordsApi, setWordsApi] = useState([]); // массив слов
   const [errorApi, setErrorApi] = useState([]); //массив ошибок
   const [isLoading, setIsLoading] = useState(false); //индикатор загрузки
+  const [hasServerErrors, setHasServerErrors] = useState(false); //наличие ошибок при работе с сервером
   const baseURL = "/api/words";
 
   //ПОЛУЧЕНИЕ СЛОВ С СЕРВЕРА
@@ -49,12 +50,14 @@ function ContextProvider({ children }) {
         "Content-type": "application/json; charset=UTF-8",
       },
       body: JSON.stringify(word),
-    });
+    })
+    .catch((error)=> setHasServerErrors(true))
   }
 
   //УДАЛЕНИЕ СЛОВА С СЕРВЕРА
   function deleteWordFromServer(id) {
-    fetch(`${baseURL}/${id}/delete`, { method: "POST" });
+    fetch(`${baseURL}/${id}/delete`, { method: "POST" })
+    .catch((error)=> setHasServerErrors(true))
   }
 
   //РЕДАКТИРОВАНИЕ СЛОВА НА СЕРВЕРЕ
@@ -65,7 +68,8 @@ function ContextProvider({ children }) {
         "Content-type": "application/json; charset=UTF-8",
       },
       body: JSON.stringify(word),
-    });
+    })
+    .catch((error)=> setHasServerErrors(true))
   }
 
   const value = {
@@ -75,6 +79,7 @@ function ContextProvider({ children }) {
     addNewWordToServer,
     deleteWordFromServer,
     updateWordOnServer,
+    hasServerErrors,
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

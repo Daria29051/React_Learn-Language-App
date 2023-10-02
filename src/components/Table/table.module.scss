@@ -79,7 +79,7 @@
 }
 
 //вывод ошибок заполнения полей
-.wordlist__errorList, .wordlist__editErrorList {
+.wordlist__errorList, .wordlist__editErrorList, .wordlist__serverErrorList {
   display: flex;
   flex-direction: column;
   justify-content: center;

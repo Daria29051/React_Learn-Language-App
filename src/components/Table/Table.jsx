@@ -16,6 +16,7 @@ export default function Table() {
     addNewWordToServer,
     deleteWordFromServer,
     updateWordOnServer,
+    hasServerErrors,
   } = useContext(Context);
   const [visibility, setVisibility] = useState(false); //скрыть/показать добавление нового слова
   const [pressed, setPressed] = useState(false); //study words / add word change mode
@@ -24,7 +25,7 @@ export default function Table() {
   const [translationInputValue, setTranslationInputValue] = useState("");
   const [wordList, setWordList] = useState(wordsApi);
   const [errorList, setErrorList] = useState([]); //ошибки ввода нового слова
-  const [editErrorList, setEditErrorList] = useState([]);
+  const [editErrorList, setEditErrorList] = useState([]);// ошибки обновления слова
   const [successEnter, setSuccessEnter] = useState("");
   const [isEdit, setIsEdit] = useState(false); //скрыть/показать  режим редактирования слова
   const [editWordInput, setEditWordInput] = useState("");
@@ -226,6 +227,9 @@ export default function Table() {
         <button className={st.wordlist__optionButton} onClick={handleClick}>
           {pressed ? "Study words" : "Add a new word"}
         </button>
+      </div>
+      <div className={st.wordlist__serverErrorList}>
+        {(hasServerErrors) ? 'Ошибка обращения к серверу. Пожалуйста, попробуйте позднее.' : ''}
       </div>
       <div className={st.wordlist__errorList}>
         {errorList.length !== 0

@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import Context from "../../context/Context";
@@ -8,43 +7,34 @@ import st from "./slider.module.scss";
 
 export default function Slider() {
   const { wordsApi } = useContext(Context);
-  const [sliderWordList, setSliderWordList] = useState(wordsApi);
+  const [sliderWordList, setSliderWordList] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [learnt, setLearnt] = useState(0);
+
+
+  useEffect(()=> {
+   setSliderWordList(wordsApi) 
+  }, [wordsApi])
+
   //  console.log(sliderWordList);
 
-  let cardsIndexArray = []; //массив с индексами карточек
-  let cardIndex; // индекс карточки
 
-  if (sliderWordList.length !== 0) {
-    for (let card of sliderWordList) {
-      cardIndex = sliderWordList.indexOf(card);
-      cardsIndexArray.push(cardIndex);
-    }
-  }
-
-  // console.log(cardsIndexArray);
-
-  // задаем состояние - начальный индекс карточки к показу 0
-
-  const [selectedIndex, setSelectedIndex] = useState(cardsIndexArray[0]);
-
-  //  функция показа следующей карточки
   const showNextCard = () => {
-    if (selectedIndex < cardsIndexArray.length - 1) {
+    if (selectedIndex < sliderWordList.length - 1) {
       setSelectedIndex(selectedIndex + 1);
-      console.log(selectedIndex);
+      // console.log(selectedIndex);
     } else {
-      setSelectedIndex(cardsIndexArray[0]);
+      setSelectedIndex(0);
     }
   };
 
-  //  функция показа предыдущей карточки
+
   const showPrevCard = () => {
-    if (selectedIndex > cardsIndexArray[0]) {
+    if (selectedIndex > 0) {
       setSelectedIndex(selectedIndex - 1);
-      console.log(selectedIndex);
+      // console.log(selectedIndex);
     } else {
-      setSelectedIndex(cardsIndexArray.length - 1);
+      setSelectedIndex(sliderWordList.length - 1);
     }
   };
 
@@ -56,7 +46,7 @@ export default function Slider() {
           <button className={st.slider__button} onClick={showPrevCard}>
             <span className={st.slider__arrow}>&lt;</span>
           </button>{" "}
-          {sliderWordList.length !== 0 ? (
+          {sliderWordList.length !== 0 && sliderWordList[selectedIndex] ? (
             <Card
               item={sliderWordList[selectedIndex]}
               learnt={learnt}
@@ -70,22 +60,12 @@ export default function Slider() {
             <span className={st.slider__arrow}>&gt;</span>
           </button>
         </div>
-        {sliderWordList.length !== 0 ? (
-          <div className={st.slider__counter}>
-            {selectedIndex + 1} / {cardsIndexArray.length}
-          </div>
-        ) : (
-          <div className={st.slider__counter}> 0 / 0</div>
-        )}
-        {sliderWordList.length !== 0 ? (
-          <div className={st.slider__learnt}>
-            Изучено слов: <strong>{learnt}</strong>
-          </div>
-        ) : (
-          <div className={st.slider__learnt}>
-            Изучено слов: <strong>0</strong>
-          </div>
-        )}
+        <div className={st.slider__counter}>
+          {sliderWordList.length !==0 ? `${selectedIndex +1} / ${sliderWordList.length}` : '0/0'}
+        </div>
+        <div className={st.slider__leart}>
+          Изучено слов: <strong>{learnt}</strong>
+        </div>
       </div>
     </>
   );

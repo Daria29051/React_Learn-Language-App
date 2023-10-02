@@ -17,6 +17,7 @@ function ContextProvider({ children }) {
           // console.log(response);
           return response;
         } else {
+          setIsLoading(false);
           throw new Error("Ошибка загрузки данных");
         }
       })
@@ -32,6 +33,7 @@ function ContextProvider({ children }) {
   //функция проверки на пустой ответ от сервера
   function checkResponse(resp) {
     if (resp.length === 0) {
+      setIsLoading(false);
       console.log("Object is empty");
       throw new Error("Нет слов для изучения.");
     } else {

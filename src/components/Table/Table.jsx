@@ -1,26 +1,34 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { observer, inject } from "mobx-react";
 import classNames from 'classnames';
 import Tablerow from "../Tablerow/Tablerow";
 import words from "../../data/words.json";
-import edit from "../../assets/icons/edit.png";
-import del from "../../assets/icons/delete.png";
 import save from "../../assets/icons/save.png";
 import cancel from "../../assets/icons/cancel.png";
 import st from "./table.module.scss";
 
-export default function Table() {
+
+const  Table = inject(["wordStore"])(observer(({wordStore})=> {
   const [visibility, setVisibility] = useState(false);
   const [pressed, setPressed] = useState(false);
   const [wordInputValue, setWordInputValue] = useState("");
   const [transcriptionInputValue, setTranscriptionInputValue] = useState("");
   const [translationInputValue, setTranslationInputValue] = useState("");
-  const [wordList, setWordlist] = useState(words);
+  const [wordList, setWordList] = useState([]);
   const [errorList, setErrorList] = useState([]);
   let errors = [];
   let wordClassNames = classNames(st.wordlist__input, wordInputValue ==='' ? st.inputError : st.wordlist__input);
   let transcriptionClassNames = classNames(st.wordlist__input, transcriptionInputValue ==='' ? st.inputError : st.wordlist__input);
   let translationClassNames = classNames(st.wordlist__input, translationInputValue ==='' ? st.inputError : st.wordlist__input);
+
+
+  useEffect(() => {
+    wordStore.loadWords();
+    setWordList(wordStore.words);
+  }, []);
+
+  console.log(wordStore.words);
 
 
 
@@ -183,4 +191,6 @@ export default function Table() {
       </table>
     </div>
   );
-}
+}))
+
+export default Table;

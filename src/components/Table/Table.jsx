@@ -1,21 +1,22 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { observer, inject } from "mobx-react";
 import classNames from 'classnames';
 import Tablerow from "../Tablerow/Tablerow";
-import words from "../../data/words.json";
+import WordStore from "../../assets/stores/WordStore";
+import { observer, inject } from "mobx-react";
 import save from "../../assets/icons/save.png";
 import cancel from "../../assets/icons/cancel.png";
 import st from "./table.module.scss";
 
 
-const  Table = inject(["wordStore"])(observer(({wordStore})=> {
+
+const Table = inject(["WordStore"])(observer(({WordStore})=> {
   const [visibility, setVisibility] = useState(false);
   const [pressed, setPressed] = useState(false);
   const [wordInputValue, setWordInputValue] = useState("");
   const [transcriptionInputValue, setTranscriptionInputValue] = useState("");
   const [translationInputValue, setTranslationInputValue] = useState("");
-  const [wordList, setWordList] = useState([]);
+  // const [wordList, setWordList] = useState([]);
   const [errorList, setErrorList] = useState([]);
   let errors = [];
   let wordClassNames = classNames(st.wordlist__input, wordInputValue ==='' ? st.inputError : st.wordlist__input);
@@ -23,13 +24,11 @@ const  Table = inject(["wordStore"])(observer(({wordStore})=> {
   let translationClassNames = classNames(st.wordlist__input, translationInputValue ==='' ? st.inputError : st.wordlist__input);
 
 
-  useEffect(() => {
-    wordStore.loadWords();
-    setWordList(wordStore.words);
-  }, []);
+  useEffect(()=> {
+    WordStore.loadWords();
+  }, [])
 
-  console.log(wordStore.words);
-
+  console.log(WordStore.words);
 
 
   //смена кнопки Study words
@@ -186,7 +185,16 @@ const  Table = inject(["wordStore"])(observer(({wordStore})=> {
           )}
         </thead>
         <tbody>
-          <Tablerow wordList={wordList} />
+        {WordStore.words.map((item) => 
+          <Tablerow
+          id={item.id}
+          key={item.id}
+          english={item.english}
+          transcription={item.transcription}
+          russian={item.russian}
+          WordStore= {WordStore}
+          />
+          )}
         </tbody>
       </table>
     </div>

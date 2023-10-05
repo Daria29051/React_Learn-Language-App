@@ -1,23 +1,25 @@
-import { makeAutoObservable } from "mobx";
+import { action, observable } from "mobx";
+import { makeObservable } from "mobx";
+import Delete from "../services/serverDeleteWord";
+import Load from "../services/serverLoadWords";
 
 class WordStore {
-
-words = [];
-
   constructor() {
-    makeAutoObservable(this);
+    makeObservable(this);
   }
 
+  @observable words = [];
 
-  loadWords = async () => {
-    const response = await fetch("/api/words");
-    const data = await response.json();
+  @action loadWords = async () => {
+    const data = await Load.loadWords();
     this.words = data;
+
   };
+
+  @action deleteWord = async (id) => {
+    await Delete.deleteWord(id)
+    this.words = this.words.filter(word => word.id !== id)
+}
 }
 
-
-
 export default WordStore;
-
-

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import uniqid from "uniqid";
 import classNames from 'classnames';
 import Tablerow from "../Tablerow/Tablerow";
 import WordStore from "../../assets/stores/WordStore";
@@ -28,7 +29,7 @@ const Table = inject(["WordStore"])(observer(({WordStore})=> {
     WordStore.loadWords();
   }, [])
 
-  console.log(WordStore.words);
+  // console.log(WordStore.words);
 
 
   //смена кнопки Study words
@@ -51,8 +52,12 @@ const Table = inject(["WordStore"])(observer(({WordStore})=> {
     setTranslationInputValue("");
   };
 
+    //создаем уникальный id
+    let uniqId = require("uniqid");
+
+
   const newWord = {
-    id: "",
+    id: uniqId(),
     english: wordInputValue,
     transcription: transcriptionInputValue,
     russian: translationInputValue,
@@ -94,13 +99,14 @@ const Table = inject(["WordStore"])(observer(({WordStore})=> {
   //добавление нового слова в таблицу
   const addNewWord = () => {
     if (errors.length === 0) {
-      setWordlist((prevState) => [newWord, ...prevState]);
+      // setWordlist((prevState) => [newWord, ...prevState]);
       setWordInputValue("");
       setTranscriptionInputValue("");
       setTranslationInputValue("");
       setErrorList([]);
-      console.log(wordList);
+      WordStore.addWord(newWord);
       console.log(newWord);
+      console.log(Array.from(WordStore.words));
     } else {
       setErrorList(errors);
     }

@@ -3,7 +3,6 @@ import { makeObservable } from "mobx";
 import Delete from "../services/serverDeleteWord";
 import Load from "../services/serverLoadWords";
 import Add from "../services/serverAddWord";
-
 class WordStore {
   constructor() {
     makeObservable(this);
@@ -11,8 +10,20 @@ class WordStore {
 
   @observable words = [];
 
+  @action checkResponse(resp) {
+    if (resp.length === 0) {
+      console.log("Object is empty");
+      throw new Error("Нет слов для изучения.");
+    } else {
+      return resp;
+    }
+  }
+
+
+
   @action loadWords = async () => {
     const data = await Load.loadWords();
+    this.checkResponse(data);
     this.words = data;
 
   };

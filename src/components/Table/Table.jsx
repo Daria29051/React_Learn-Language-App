@@ -123,7 +123,7 @@ const Table = inject(["WordStore"])(
 
     if (WordStore.loading === true) {
       return (
-        <div className={st.loading}>
+        <div className={st.wordlist__loading}>
           <h1>Loading...</h1>
         </div>
       );

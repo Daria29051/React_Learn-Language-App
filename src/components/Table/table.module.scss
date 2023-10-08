@@ -35,6 +35,12 @@
   }
 }
 
+.wordlist__loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .wordlist__table {
   margin: 15px auto;
   border-collapse: collapse;

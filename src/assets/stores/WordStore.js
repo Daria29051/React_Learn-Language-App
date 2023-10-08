@@ -9,6 +9,7 @@ class WordStore {
   }
 
   @observable words = [];
+  @observable loading = false;
 
   @action checkResponse(resp) {
     if (resp.length === 0) {
@@ -22,7 +23,9 @@ class WordStore {
 
 
   @action loadWords = async () => {
+    this.loading = true;
     const data = await Load.loadWords();
+    this.loading = false;
     this.checkResponse(data);
     this.words = data;
 

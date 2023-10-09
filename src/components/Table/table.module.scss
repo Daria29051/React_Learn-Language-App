@@ -96,3 +96,22 @@
   margin: 0;
   padding: 0;
 }
+
+
+//раздел редактирования слова
+.wordlist__editPart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.editor__saveButton, .editor__cancelButton {
+ cursor: pointer;
+ background-color: $bg-color1;
+ color: white;
+border: 1px solid black;
+
+ &:hover {
+  background-color: $bg-color4;
+ }
+}

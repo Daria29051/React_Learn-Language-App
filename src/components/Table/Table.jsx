@@ -16,8 +16,15 @@ const Table = inject(["WordStore"])(
     const [wordInputValue, setWordInputValue] = useState("");
     const [transcriptionInputValue, setTranscriptionInputValue] = useState("");
     const [translationInputValue, setTranslationInputValue] = useState("");
+    const [editWordInput, setEditWordInput] = useState("");
+    const [editTranscriptionInput, setEditTranscriptionInput] = useState("");
+    const [editTranslationInput, setEditTranslationInput] = useState("");
+    const [wordItem, setWordItem] = useState(""); //wordItem из Tablerow.jsx
+    const [isEdit, setIsEdit] = useState(false); //скрыть/показать  режим редактирования слова
     // const [wordList, setWordList] = useState([]);
     const [errorList, setErrorList] = useState([]);
+    const [successEnter, setSuccessEnter] = useState("");
+
     let errors = [];
     let wordClassNames = classNames(
       st.wordlist__input,
@@ -55,6 +62,11 @@ const Table = inject(["WordStore"])(
       setWordInputValue("");
       setTranscriptionInputValue("");
       setTranslationInputValue("");
+    };
+
+    //получпение wordItem из Tablerow.jsx
+    const getItem = (item) => {
+      setWordItem(item);
     };
 
     //создаем уникальный id
@@ -121,6 +133,11 @@ const Table = inject(["WordStore"])(
       addNewWord();
     };
 
+    //ФУНКЦИЯ ЗАКРЫТИЯ РЕЖИМА РЕДАКТИРОВАНИЯ
+    const stopEditing = () => {
+      setIsEdit(false);
+    };
+
     if (WordStore.loading === true) {
       return (
         <div className={st.wordlist__loading}>
@@ -146,6 +163,32 @@ const Table = inject(["WordStore"])(
               ))
             : ""}
         </div>
+        <div className={st.wordlist__successEnter}>{successEnter}</div>
+        {!isEdit ? (
+          ""
+        ) : (
+          <div className={st.wordlist__editPart}>
+            <input
+              type="text"
+              value={editWordInput}
+              onChange={(e) => setEditWordInput(e.target.value)}
+            />
+            <input
+              type="text"
+              value={editTranscriptionInput}
+              onChange={(e) => setEditTranscriptionInput(e.target.value)}
+            />
+            <input
+              type="text"
+              value={editTranslationInput}
+              onChange={(e) => setEditTranslationInput(e.target.value)}
+            />
+            <button className={st.editor__saveButton}>Save</button>
+            <button className={st.editor__cancelButton} onClick={stopEditing}>
+              Cancel
+            </button>
+          </div>
+        )}
         <table className={st.wordlist__table}>
           <thead>
             <tr>
@@ -212,6 +255,12 @@ const Table = inject(["WordStore"])(
                 transcription={item.transcription}
                 russian={item.russian}
                 WordStore={WordStore}
+                setIsEdit={setIsEdit}
+                setEditWordInput={setEditWordInput}
+                setEditTranscriptionInput={setEditTranscriptionInput}
+                setEditTranslationInput={setEditTranslationInput}
+                getItem={getItem}
+                setSuccessEnter={setSuccessEnter}
               />
             ))}
           </tbody>

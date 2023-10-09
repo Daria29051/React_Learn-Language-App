@@ -6,14 +6,37 @@ import { observer, inject } from "mobx-react";
 import { useEffect } from "react";
 
 const Tablerow = (props) => {
- 
-  const { english, transcription, russian, id,  WordStore} = props;
- 
-  const handleDelete = () => {
-  WordStore.deleteWord(id);
-  };
+  const {
+    english,
+    transcription,
+    russian,
+    id,
+    WordStore,
+    isEdit,
+    setIsEdit,
+    setEditWordInput,
+    setEditTranscriptionInput,
+    setEditTranslationInput,
+    getItem,
+    setSuccessEnter,
+  } = props;
 
-  
+//ФУНКЦИЯ НАЧАЛА РЕДАКТИРОВАНИЯ
+const startEditing = (item)=> {
+  setSuccessEnter('');  
+  getItem(item);
+  // console.log(item);
+  setIsEdit(!isEdit);
+  setEditWordInput(english);
+  setEditTranscriptionInput(transcription);
+  setEditTranslationInput(russian);
+
+}
+
+  //УДАЛЕНИЕ СЛОВА
+  const handleDelete = () => {
+    WordStore.deleteWord(id);
+  };
 
   return (
     <>
@@ -27,6 +50,7 @@ const Tablerow = (props) => {
             alt="edit"
             className={st.wordlist__actionIcon}
             title="Edit"
+            onClick={startEditing}
           />
           <img
             src={del}

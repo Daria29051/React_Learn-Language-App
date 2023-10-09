@@ -3,6 +3,8 @@ import { makeObservable } from "mobx";
 import Delete from "../services/serverDeleteWord";
 import Load from "../services/serverLoadWords";
 import Add from "../services/serverAddWord";
+import Edit from "../services/serverEditWord";
+
 class WordStore {
   constructor() {
     makeObservable(this);
@@ -40,6 +42,10 @@ class WordStore {
 @action addWord = async (word) => {
    await Add.addWord(word);
    this.words.push(word);
+}
+
+@action editWord = async (id, word) => {
+    await Edit.editWord(id, word);
 }
 
 }

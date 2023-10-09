@@ -84,7 +84,7 @@
   cursor: pointer;
 }
 
-.wordlist__errorList {
+.wordlist__errorList,  .wordlist__editErrorList {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -92,7 +92,7 @@
   color: red;
 }
 
-.wordlist__errorListItem {
+.wordlist__errorListItem, .wordlist__editErrorListItem {
   margin: 0;
   padding: 0;
 }
@@ -114,4 +114,14 @@ border: 1px solid black;
  &:hover {
   background-color: $bg-color4;
  }
+}
+
+//успешное добавление / редактирование слова
+.wordlist__successEnter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2em;
+  color: green;
 }

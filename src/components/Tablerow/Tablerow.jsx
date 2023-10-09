@@ -7,6 +7,7 @@ import { useEffect } from "react";
 
 const Tablerow = (props) => {
   const {
+    item,
     english,
     transcription,
     russian,
@@ -22,16 +23,16 @@ const Tablerow = (props) => {
   } = props;
 
 //ФУНКЦИЯ НАЧАЛА РЕДАКТИРОВАНИЯ
-const startEditing = (item)=> {
+const startEditing = ()=> {
   setSuccessEnter('');  
   getItem(item);
-  // console.log(item);
   setIsEdit(!isEdit);
   setEditWordInput(english);
   setEditTranscriptionInput(transcription);
   setEditTranslationInput(russian);
 
 }
+
 
   //УДАЛЕНИЕ СЛОВА
   const handleDelete = () => {

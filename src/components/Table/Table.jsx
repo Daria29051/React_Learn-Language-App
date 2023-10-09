@@ -22,10 +22,19 @@ const Table = inject(["WordStore"])(
     const [wordItem, setWordItem] = useState(""); //wordItem из Tablerow.jsx
     const [isEdit, setIsEdit] = useState(false); //скрыть/показать  режим редактирования слова
     // const [wordList, setWordList] = useState([]);
-    const [errorList, setErrorList] = useState([]);
+    const [errorList, setErrorList] = useState([]); //ошибки ввода нового слова
+    const [editErrorList, setEditErrorList] = useState([]);// ошибки обновления слова
     const [successEnter, setSuccessEnter] = useState("");
+    
+     //рег выражения для проверки правильности заполнения полей
+  const testEnglishLetters = /^[a-z]+$/i;
+  const testTranscription = /^\[[a-z:\.ˈΛɑɒəeɛɜɔоɪʊæŋʒʤʃθðː\s]+\]/;
+  const testRussianLetters = /^[а-я]+$/i;
 
-    let errors = [];
+
+
+    let errors = []; //массив вывода ошибок заполнения полей для нового слова
+    let editErrors = [];//массив вывода ошибок заполнения полей для updated слова
     let wordClassNames = classNames(
       st.wordlist__input,
       wordInputValue === "" ? st.inputError : st.wordlist__input
@@ -64,9 +73,20 @@ const Table = inject(["WordStore"])(
       setTranslationInputValue("");
     };
 
-    //получпение wordItem из Tablerow.jsx
+    //получение wordItem из Tablerow.jsx
     const getItem = (item) => {
       setWordItem(item);
+      // console.log(item);
+    };
+
+    //updated слово
+    let updatedWord = {
+      id: wordItem.id,
+      english: editWordInput,
+      transcription: editTranscriptionInput,
+      russian: editTranslationInput,
+      tags: " ",
+      tags_json: [],
     };
 
     //создаем уникальный id
@@ -81,35 +101,59 @@ const Table = inject(["WordStore"])(
     };
 
     //проверка правильности заполнения инпутов
-    const testInputs = () => {
-      errors = [];
-      const testEnglishLetters = /^[a-z]+$/i;
-      const testTranscription = /^\[[a-z:\.ˈΛɑəeɛɜɔоɪʊæŋʒʤʃθðː\s]+\]/;
-      const testRussianLetters = /^[а-я]+$/i;
+  const testInputs = () => {
+
+    if (!isEdit) {
+    if (
+      wordInputValue === "" ||
+      transcriptionInputValue === "" ||
+      translationInputValue === ""
+    ) {
+      errors.push("Заполните все поля ввода.");
+    }
+
+    if (!testEnglishLetters.test(wordInputValue)) {
+      errors.push("Используйте английские буквы для ввода слова.");
+    }
+
+    if (!testTranscription.test(transcriptionInputValue)) {
+      errors.push("Проверьте правильность ввода транскрипции.");
+    }
+
+    if (!testRussianLetters.test(translationInputValue)) {
+      errors.push("Используйте русские буквы для ввода перевода.");
+    }
+
+  }
+
+    if (isEdit) {
 
       if (
-        wordInputValue === "" ||
-        transcriptionInputValue === "" ||
-        translationInputValue === ""
+        editWordInput === "" ||
+        editTranscriptionInput === "" ||
+        editTranslationInput === ""
       ) {
-        errors.push("Заполните все поля ввода.");
+        editErrors.push("Заполните все поля ввода.");
       }
 
-      if (!testEnglishLetters.test(wordInputValue)) {
-        errors.push("Используйте английские буквы для ввода слова.");
+      if (!testEnglishLetters.test(editWordInput)) {
+        editErrors.push("Используйте английские буквы для ввода слова.");  
       }
 
-      if (!testTranscription.test(transcriptionInputValue)) {
-        errors.push("Проверьте правильность ввода транскрипции.");
+      if (!testTranscription.test(editTranscriptionInput)) {
+        editErrors.push("Проверьте правильность ввода транскрипции.");
       }
 
-      if (!testRussianLetters.test(translationInputValue)) {
-        errors.push("Используйте русские буквы для ввода перевода.");
+      if (!testRussianLetters.test(editTranslationInput)) {
+        editErrors.push("Используйте русские буквы для ввода перевода.");
       }
 
-      console.log(errors);
-      setErrorList(errors);
-    };
+    }
+    // console.log(errors);
+    // console.log(editErrors);
+    setErrorList(errors);
+    setEditErrorList(editErrors);
+  };
 
     //добавление нового слова в таблицу
     const addNewWord = () => {
@@ -131,6 +175,19 @@ const Table = inject(["WordStore"])(
     const testInputsAndAddWord = () => {
       testInputs();
       addNewWord();
+    };
+
+    //ФУНКЦИЯ РЕДАКТИРОВАНИЯ СЛОВА
+    const editWord = () => {
+      testInputs();
+      if (editErrors.length === 0) {
+        WordStore.editWord(wordItem.id, updatedWord);
+        wordItem.english = editWordInput;
+        wordItem.transcription = editTranscriptionInput;
+        wordItem.russian = editTranslationInput;
+        setIsEdit(!isEdit);
+        setSuccessEnter("Слово успешно обновлено!");
+      }
     };
 
     //ФУНКЦИЯ ЗАКРЫТИЯ РЕЖИМА РЕДАКТИРОВАНИЯ
@@ -163,6 +220,15 @@ const Table = inject(["WordStore"])(
               ))
             : ""}
         </div>
+        <div className={st.wordlist__editErrorList}>
+        {editErrorList.length !== 0
+          ? editErrorList.map((item, index) => (
+              <div className={st.wordlist__editErrorListItem} key={index}>
+                {item}
+              </div>
+            ))
+          : ""}
+      </div>
         <div className={st.wordlist__successEnter}>{successEnter}</div>
         {!isEdit ? (
           ""
@@ -183,7 +249,9 @@ const Table = inject(["WordStore"])(
               value={editTranslationInput}
               onChange={(e) => setEditTranslationInput(e.target.value)}
             />
-            <button className={st.editor__saveButton}>Save</button>
+            <button className={st.editor__saveButton} onClick={editWord}>
+              Save
+            </button>
             <button className={st.editor__cancelButton} onClick={stopEditing}>
               Cancel
             </button>
@@ -249,6 +317,7 @@ const Table = inject(["WordStore"])(
           <tbody>
             {WordStore.words.map((item) => (
               <Tablerow
+                item = {item}
                 id={item.id}
                 key={item.id}
                 english={item.english}

@@ -193,6 +193,7 @@ const Table = inject(["WordStore"])(
     //ФУНКЦИЯ ЗАКРЫТИЯ РЕЖИМА РЕДАКТИРОВАНИЯ
     const stopEditing = () => {
       setIsEdit(false);
+      setEditErrorList([]);
     };
 
     if (WordStore.loading === true) {
